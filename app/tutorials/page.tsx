@@ -16,15 +16,15 @@ export default function TutorialsPage() {
       tagline: 'Get started with Fluxedita in minutes',
       description: 'Follow along as we guide you through the installation process, from downloading the template to running it locally on your machine. Perfect for beginners!',
       icon: <Download className="w-6 h-6 text-blue-600" />,
-      videoId: 'DvnddhJMR_4', // YouTube video ID
+      videoId: 'C2usSihBXTU', // YouTube video ID
     },
     {
       id: 'editing',
-      title: 'How To Edit Video Tutorial',
-      tagline: 'Master the basics of content editing',
+      title: 'How To Edit Video Tutorial - Part One',
+      tagline: 'Learn the basics of content editing',
       description: 'Learn how to customize your Fluxedita template with our intuitive editing tools. Change text, images, and layouts with ease.',
       icon: <Code className="w-6 h-6 text-blue-600" />,
-      videoId: 'ewtlIWV7y_I', // YouTube video ID
+      videoId: 'tmi_oVQ2rvQ', // YouTube video ID
       reverse: true
     },
     {

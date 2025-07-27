@@ -197,7 +197,29 @@ export function InstallationGuide() {
             </CardContent>
           </Card>
         </motion.div>
-
+        <div>&nbsp;</div>
+        <div className="flex-1">
+            <Play className="h-7 w-7 text-blue-600 mr-3"/>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center">
+                Watch the Fluxedita Installation Video
+            </h2>
+            <p className="text-lg text-gray-700 mb-4">
+                Watch the Fluxedita Installation Video to learn how to install your new Fluxedita website in minutes.
+            </p>
+        </div>
+        <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
+                        <iframe
+                          src="https://www.youtube.com/embed/C2usSihBXTU"
+                          title="Fluxedita Installation Guide"
+                          frameBorder="2"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          className="absolute top-0 left-0 w-full h-full rounded-lg"
+                          width="75%"
+                          height="75%"
+                        />
+                      </div>
+                      <div>&nbsp;</div>
         {/* Installation Steps */}
         <div className="space-y-16">
           {/* Step 1 */}
@@ -599,10 +621,10 @@ export function InstallationGuide() {
                   Before you begin, be sure to check out our installation video. It walks you through the process and
                   makes everything much clearer.
                 </p>
-                <div className="text-center mt-6">
+                <div className="text-center mt-6 space-y-4">
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:opacity-90">
+                      <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:opacity-90 w-full max-w-md mx-auto">
                         <Play className="mr-2 h-5 w-5" />
                         Watch Installation Video - Full Version
                       </Button>
@@ -625,11 +647,61 @@ export function InstallationGuide() {
                       </div>
                     </DialogContent>
                   </Dialog>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button variant="outline" className="w-full">
+                          <Play className="mr-2 h-4 w-4" />
+                          How to Edit - Part One
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-3xl w-full p-0">
+                        <DialogHeader className="px-6 pt-6">
+                          <DialogTitle>How to Edit - Part One</DialogTitle>
+                        </DialogHeader>
+                        <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
+                          <iframe
+                            src="https://www.youtube.com/embed/SgIpb1kG6xQ"
+                            title="How to Edit - Part One"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            className="absolute top-0 left-0 w-full h-full"
+                          />
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button variant="outline" className="w-full">
+                          <Play className="mr-2 h-4 w-4" />
+                          How to Edit - Part Two
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-3xl w-full p-0">
+                        <DialogHeader className="px-6 pt-6">
+                          <DialogTitle>How to Edit - Part Two</DialogTitle>
+                        </DialogHeader>
+                        <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
+                          <iframe
+                            src="https://www.youtube.com/embed/c10uP2uwuLo"
+                            title="How to Edit - Part Two"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            className="absolute top-0 left-0 w-full h-full"
+                          />
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
                 </div>
               </CardContent>
             </Card>
           </motion.div>
         </div>
+        
       </div>
     </section>
   )

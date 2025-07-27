@@ -201,7 +201,7 @@ export function ProductPackages() {
                       >
                         <a 
                           href={plan.id === 'landing-page-package' 
-                            ? 'https://custom-landingpage-package.vercel.app/'
+                            ? 'https://digital-media-store.vercel.app/'
                             : plan.id === 'root-page-package'
                             ? 'https://custom-rootpage-package.vercel.app/'
                             : plan.id === 'multi-page-package'
