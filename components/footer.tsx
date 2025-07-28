@@ -8,7 +8,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
-              FluxEdita
+              <a href="/">FluxEdita</a>
             </div>
             <p className="text-gray-300 mb-6 max-w-md">
               The revolutionary live-editable web platform that empowers anyone to create, manage, and scale modern

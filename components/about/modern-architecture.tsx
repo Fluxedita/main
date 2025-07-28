@@ -1,5 +1,10 @@
+"use client"
+
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Code, Zap } from "lucide-react"
+import { TechStack } from "@/components/products/tech-stack"
 
 const technologies = [
   { name: "Next.js", description: "for lightning-fast performance and SEO" },
@@ -8,6 +13,8 @@ const technologies = [
 ]
 
 export function ModernArchitecture() {
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
     <section className="py-20 bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -36,6 +43,7 @@ export function ModernArchitecture() {
 
         <div className="text-center">
           <Button
+            onClick={() => setIsOpen(true)}
             variant="outline"
             size="lg"
             className="border-white text-white hover:bg-white hover:text-gray-900 bg-transparent"
@@ -44,6 +52,15 @@ export function ModernArchitecture() {
           </Button>
         </div>
       </div>
+
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl text-center mb-6">Our Modern Tech Stack</DialogTitle>
+          </DialogHeader>
+          <TechStack />
+        </DialogContent>
+      </Dialog>
     </section>
   )
 }

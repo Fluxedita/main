@@ -24,7 +24,7 @@ export default function TutorialsPage() {
       tagline: 'Learn the basics of content editing',
       description: 'Learn how to customize your Fluxedita template with our intuitive editing tools. Change text, images, and layouts with ease.',
       icon: <Code className="w-6 h-6 text-blue-600" />,
-      videoId: 'tmi_oVQ2rvQ', // YouTube video ID
+      videoId: 'SgIpb1kG6xQ', // YouTube video ID
       reverse: true
     },
     {
@@ -41,7 +41,7 @@ export default function TutorialsPage() {
       tagline: 'Take your skills to the next level',
       description: 'Discover advanced tips and tricks for customizing your Fluxedita template. Learn about advanced features and customization options.',
       icon: <Settings className="w-6 h-6 text-blue-600" />,
-      videoId: 'ewtlIWV7y_I', // YouTube video ID
+      videoId: 'c10uP2uwuLo', // YouTube video ID
       reverse: true
     },
     {
@@ -50,7 +50,7 @@ export default function TutorialsPage() {
       tagline: 'Take your skills to the next level',
       description: 'Discover advanced tips and tricks for customizing your Fluxedita template. Learn about advanced features and customization options. If you are already familiar with the process, this is the perfect video for you!',
       icon: <Settings className="w-6 h-6 text-blue-600" />,
-      videoId: 'ewtlIWV7y_I', // YouTube video ID
+      videoId: 'c10uP2uwuLo', // YouTube video ID
     }
   ]
 
