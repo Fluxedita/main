@@ -15,10 +15,13 @@ export function AboutCTA() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/contact">
           <Button size="lg" variant="secondary" className="text-lg px-8 py-3">
             Get Started Today
             <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
+            </Button>
+            </a>
+            <a href="/products">
           <Button
             size="lg"
             variant="outline"
@@ -26,7 +29,8 @@ export function AboutCTA() {
           >
             <Package className="mr-2 h-5 w-5" />
             Explore Products
-          </Button>
+            </Button>
+            </a>
         </div>
       </div>
       <div className="text-center mt-6">

@@ -1,6 +1,6 @@
 "use client"
 
-import { Code, Database, Palette, Zap, CreditCard, ImageIcon, TrendingUp, Repeat } from "lucide-react" // Added Repeat icon
+import { Code, Database, Palette, Zap, CreditCard, ImageIcon, TrendingUp, Repeat, Server, Lock, Route, GitBranch } from "lucide-react"
 
 const technologies = [
   {
@@ -46,10 +46,34 @@ const technologies = [
     letter: "C",
   },
   {
-    icon: Repeat, // New icon for reusability
+    icon: Repeat,
     name: "Unlimited Reusability",
     description: "Deploy your purchased packages across any number of projects without limitations.",
-    letter: "U", // Unique letter for this card
+    letter: "U",
+  },
+  {
+    icon: Server,
+    name: "Flexible Hosting",
+    description: "Flexible deployment with CI/CD integration for blazing-fast hosting and automatic builds",
+    letter: "V",
+  },
+  {
+    icon: GitBranch,
+    name: "Environment Variables",
+    description: "Secure configuration of API keys and service credentials across environments",
+    letter: "E",
+  },
+  {
+    icon: Lock,
+    name: "Auth Guards & RLS",
+    description: "Row Level Security for secure access control",
+    letter: "A",
+  },
+  {
+    icon: Route,
+    name: "Dynamic Routing",
+    description: "Automatic route generation and custom slugs for scalable content structures",
+    letter: "D",
   },
 ]
 
@@ -100,7 +124,7 @@ export function TechStack() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {benefits.map((benefit, index) => (
             <div key={index} className="text-center">
               <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -110,6 +134,13 @@ export function TechStack() {
               <p className="text-gray-600">{benefit.description}</p>
             </div>
           ))}
+        </div>
+
+        <div className="text-center max-w-4xl mx-auto">
+          <h3 className="text-2xl font-bold text-gray-900 mb-4">Built-In Developer & Creator Tools</h3>
+          <p className="text-xl text-gray-600">
+            Everything you need to create, manage, and scale your web presence — all in one powerful platform.
+          </p>
         </div>
       </div>
     </section>
