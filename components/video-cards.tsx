@@ -30,7 +30,7 @@ const videoCards: VideoCard[] = [
   {
     title: "Page Editor Tutorial",
     description: "Learn how to use our page editor",
-    videoId: "d-vhR_wzNho", // Replace with actual video ID
+    videoId: "SgIpb1kG6xQ", // Replace with actual video ID
     buttonText: "Page Editor Guide",
     dialogTitle: "Page Editor Tutorial"
   },
