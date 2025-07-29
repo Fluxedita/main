@@ -17,9 +17,16 @@ export function Header() {
           <div className="flex items-center">
             <Link
               href="/"
-              className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+              className="flex items-center space-x-2"
             >
-              FluxEdita
+              <img 
+                src="/favicon.ico" 
+                alt="FluxEdita Logo" 
+                className="h-8 w-8"
+              />
+              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                FluxEdita
+              </span>
             </Link>
           </div>
 
