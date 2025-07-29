@@ -37,7 +37,7 @@ const videoCards: VideoCard[] = [
   {
     title: "Advanced Features",
     description: "Explore advanced platform features",
-    videoId: "C2usSihBXTU", // Replace with actual video ID
+    videoId: "c10uP2uwuLo", // Replace with actual video ID
     buttonText: "Advanced Features",
     dialogTitle: "Advanced Features Walkthrough"
   }
