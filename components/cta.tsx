@@ -66,7 +66,7 @@ export function CTA() {
                 </DialogHeader>
                 <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
                   <iframe
-                    src="https://www.youtube.com/watch?v=hZ8Yd4Emxc8"
+                    src="https://www.youtube.com/embed/hZ8Yd4Emxc8"
                     title="Fluxedita Installation Guide - Short Version"
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -94,7 +94,7 @@ export function CTA() {
                 </DialogHeader>
                 <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
                   <iframe
-                    src="https://www.youtube.com/watch?v=hZ8Yd4Emxc8"
+                    src="https://www.youtube.com/embed/hZ8Yd4Emxc8"
                     title="Fluxedita Installation Guide - Full Version"
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
