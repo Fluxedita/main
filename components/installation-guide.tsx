@@ -209,7 +209,7 @@ export function InstallationGuide() {
         </div>
         <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
                         <iframe
-                          src="https://www.youtube.com/embed/C2usSihBXTU"
+                          src="https://www.youtube.com/watch?v=hZ8Yd4Emxc8"
                           title="Fluxedita Installation Guide"
                           frameBorder="2"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -605,7 +605,7 @@ export function InstallationGuide() {
                     <span>
                       Watch setup tutorials on our{" "}
                       <a
-                        href="https://youtu.be/d-vhR_wzNho"
+                        href="https://www.youtube.com/watch?v=hZ8Yd4Emxc8"
                         className="text-blue-600 hover:underline"
                         onClick={(e) => {
                           e.preventDefault()
@@ -635,7 +635,7 @@ export function InstallationGuide() {
                       </DialogHeader>
                       <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
                         <iframe
-                          src="https://www.youtube.com/embed/C2usSihBXTU"
+                          src="https://www.youtube.com/watch?v=hZ8Yd4Emxc8"
                           title="Fluxedita Installation Guide"
                           frameBorder="0"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
