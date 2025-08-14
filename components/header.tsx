@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Menu, X } from "lucide-react"
+import { Menu, X, BookOpen, GraduationCap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { ChevronDown } from "lucide-react"
@@ -11,7 +11,18 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
+    <>
     <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm border-b border-gray-200 z-50">
+      {/* Key value top bar */}
+      <div className="hidden md:block bg-gradient-to-r from-blue-50 via-white to-purple-50 border-b border-gray-200/60">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center gap-3 py-1.5 text-xs">
+            <span className="inline-flex items-center rounded-full bg-blue-100 text-blue-800 px-2.5 py-1 font-medium">Guided</span>
+            <span className="inline-flex items-center rounded-full bg-green-100 text-green-800 px-2.5 py-1 font-medium">Client Handover</span>
+            <span className="inline-flex items-center rounded-full bg-purple-100 text-purple-800 px-2.5 py-1 font-medium">Reusable License</span>
+          </div>
+        </div>
+      </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
@@ -30,12 +41,18 @@ export function Header() {
             </Link>
           </div>
 
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden lg:flex space-x-8">
             <Link href="/products" className="text-gray-700 hover:text-blue-600 transition-colors">
               Products
             </Link>
             <Link href="/pricing" className="text-gray-700 hover:text-blue-600 transition-colors">
               Pricing
+            </Link>
+            <Link href="/documentation" className="inline-flex items-center text-gray-700 hover:text-blue-600 transition-colors">
+              <BookOpen className="mr-1.5 h-4 w-4" /> Docs
+            </Link>
+            <Link href="/learning" className="inline-flex items-center text-gray-700 hover:text-blue-600 transition-colors">
+              <GraduationCap className="mr-1.5 h-4 w-4" /> Learn
             </Link>
             <Link href="/about" className="text-gray-700 hover:text-blue-600 transition-colors">
               About
@@ -46,7 +63,7 @@ export function Header() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Link href="/" className="flex items-center text-gray-700 hover:text-blue-600 transition-colors">
-                  Key Docs <ChevronDown className="ml-1 h-4 w-4" />
+                  Resources <ChevronDown className="ml-1 h-4 w-4" />
                 </Link>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -66,30 +83,30 @@ export function Header() {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                <Link href="/documentation" className="text-gray-700 hover:text-blue-600 transition-colors">
-              Documentation
-            </Link>
+                  <Link href="/documentation" className="text-gray-700 hover:text-blue-600 transition-colors">
+                    Documentation
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                <Link href="/learning" className="text-gray-700 hover:text-blue-600 transition-colors">
-              Learning With FluxEdita
-            </Link>
+                  <Link href="/learning" className="text-gray-700 hover:text-blue-600 transition-colors">
+                    Learning With FluxEdita
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                <Link href="/faq" className="text-gray-700 hover:text-blue-600 transition-colors">
-              Frequently Asked Questions
-            </Link>
+                  <Link href="/faq" className="text-gray-700 hover:text-blue-600 transition-colors">
+                    Frequently Asked Questions
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                <Link href="/help" className="text-gray-700 hover:text-blue-600 transition-colors">
-              Help
-            </Link>
+                  <Link href="/help" className="text-gray-700 hover:text-blue-600 transition-colors">
+                    Help
+                  </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </nav>
 
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-4">
             <Button asChild variant="ghost">
               <Link href="/signin">Sign In</Link>
             </Button>
@@ -98,7 +115,7 @@ export function Header() {
             </Button>
           </div>
 
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
@@ -106,8 +123,13 @@ export function Header() {
         </div>
 
         {isMenuOpen && (
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+              <div className="flex items-center gap-2 px-3 py-2">
+                <span className="inline-flex items-center rounded-full bg-blue-100 text-blue-800 px-2 py-0.5 text-xs font-medium">Guided</span>
+                <span className="inline-flex items-center rounded-full bg-green-100 text-green-800 px-2 py-0.5 text-xs font-medium">Client Handover</span>
+                <span className="inline-flex items-center rounded-full bg-purple-100 text-purple-800 px-2 py-0.5 text-xs font-medium">Reusable License</span>
+              </div>
               <div className="px-3 py-2 text-gray-500 text-sm font-medium">Home Sections</div>
               <a href="#features" className="block px-6 py-2 text-gray-700 hover:text-blue-600">
                 Features
@@ -123,6 +145,12 @@ export function Header() {
               </Link>
               <Link href="/pricing" className="block px-3 py-2 text-gray-700 hover:text-blue-600">
                 Pricing
+              </Link>
+              <Link href="/documentation" className="block px-3 py-2 text-gray-700 hover:text-blue-600">
+                <span className="inline-flex items-center"><BookOpen className="mr-2 h-4 w-4" /> Docs</span>
+              </Link>
+              <Link href="/learning" className="block px-3 py-2 text-gray-700 hover:text-blue-600">
+                <span className="inline-flex items-center"><GraduationCap className="mr-2 h-4 w-4" /> Learn</span>
               </Link>
               <Link href="/installation" className="block px-3 py-2 text-gray-700 hover:text-blue-600">
                 Installation Guide
@@ -149,5 +177,8 @@ export function Header() {
         )}
       </div>
     </header>
+    {/* Spacer to offset fixed header height so content (e.g., hero sections) isn't obscured */}
+    <div aria-hidden className="h-16 md:h-24"></div>
+    </>
   )
 }

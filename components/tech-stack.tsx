@@ -48,9 +48,10 @@ export function TechStack() {
     <section id="tech" className="py-20 bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Built with Modern Tech Stack</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">All‑in‑One, Full‑Stack Foundations</h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Powered by cutting-edge technologies that ensure performance, scalability, and developer experience.
+            Built on modern tech for performance and scalability — fully guided from beginner → expert with a reusable license,
+            client handover & editability, and 12 months of safe app‑code updates.
           </p>
         </div>
 

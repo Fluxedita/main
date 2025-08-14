@@ -13,27 +13,27 @@ const slides = [
     type: "hero",
     title: (
       <>
+        <span className="text-gray-900">Guided, All‑in‑One</span>
+        <br />
         <motion.span
           className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
           animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
           transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
           style={{ backgroundSize: "200% 200%" }}
         >
-          FluxEdita
+          Full‑Stack Developer Platform
         </motion.span>
-        <br />
-        Live-Editable Web Platform
       </>
     ),
     description:
-      "Empowers anyone — from beginners to developers — to design, update, and manage modern websites directly in the browser. No external builders. No confusing CMS dashboards. Just powerful, intuitive editing and full control at your fingertips.",
+      "All packages are fully guided (beginner → expert), include a reusable license for the purchaser, client handover & editability, and 12 months of app‑code updates that never overwrite your content or database. Build and manage live, right in the browser.",
     badge: {
       icon: Zap,
-      text: "Welcome to the Future of Website Creation",
+      text: "All‑in‑One • Fully Guided",
     },
     ctaButtons: [
-      { text: "Start Building Now", link: "/pricing", variant: "default" },
-      { text: "View Demo", link: "/products", variant: "outline" },
+      { text: "See Plans", link: "/pricing", variant: "default" },
+      { text: "Explore Packages", link: "/products", variant: "outline" },
     ],
     techIcons: [
       { icon: Code, text: "Next.js & React" },
@@ -45,24 +45,24 @@ const slides = [
   {
     id: 2,
     type: "problems",
-    title: "Real-World Pain Points Solved",
+    title: "Guided Solutions to Real Pain Points",
     description:
-      "We understand the frustrations of modern web development. Here's how Fluxedita eliminates the common pain points that slow you down.",
+      "From onboarding to handover, FluxEdita guides you at every step. Reusable packages, built‑in admin tools, and safe app‑code updates remove common blockers for teams and clients alike.",
     points: [
       {
         icon: Shield,
         shortProblem: "Worried about lacking the necessary technical skills?",
-        shortSolution: "If you can click and type, you can manage your website.",
+        shortSolution: "Guided onboarding: if you can click and type, you can manage your site.",
       },
       {
         icon: Users,
         shortProblem: "Struggling with disconnected user or media management systems?",
-        shortSolution: "Built-in CRUD interfaces for members and media are included.",
+        shortSolution: "Built‑in CRUD for members and media, ready out of the box.",
       },
       {
         icon: Star,
         shortProblem: "Are developer bottlenecks slowing down your content updates?",
-        shortSolution: "Non-devs can manage pages live, freeing up developers.",
+        shortSolution: "Client handover & live editability for non‑devs; developers extend code safely.",
       },
     ],
     ctaButtons: [
@@ -75,7 +75,7 @@ const slides = [
     type: "packages",
     title: "More Than Just a Template",
     description:
-      "With Fluxedita, you’re not buying a single landing page, or just one multipage layout. You're unlocking an unlimited, endlessly reusable design system — each package a launchpad for any number of unique, fully editable sites.",
+      "Unlock an endlessly reusable design system — each package is a launchpad for any number of unique, fully editable sites. Includes a reusable license, client handover & editability, and 12 months of safe app‑code updates.",
     points: [
       {
         icon: Unlink,
@@ -134,7 +134,7 @@ export function HeroSlider() {
   useEffect(() => {
     const interval = setInterval(() => {
       paginate(1)
-    }, 7000) // Change slide every 7 seconds
+    }, 14000) // Change slide every 14 seconds (doubled duration)
 
     return () => clearInterval(interval)
   }, [page]) // Re-run effect when page changes to reset interval

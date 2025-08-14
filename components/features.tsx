@@ -16,7 +16,7 @@ const features = [
     icon: Layers,
     title: "Page Control Sidebar",
     description:
-      "Intuitive sidebar controls for managing layouts, sections, and components with drag-and-drop simplicity and instant updates.",
+      "Intuitive sidebar controls for managing layouts, sections, and components — reorder using up/down controls with instant updates.",
   },
   {
     icon: Users,
@@ -94,10 +94,11 @@ export function Features() {
           variants={titleVariants}
         >
           <motion.h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Built-In Developer & Creator Tools
+            All‑in‑One, Fully Guided Tools
           </motion.h2>
           <motion.p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Everything you need to create, manage, and scale your web presence — all in one powerful platform.
+            Create, manage, and scale — guided from beginner → expert. Reusable license, client handover & editability,
+            and safe app‑code updates included.
           </motion.p>
         </motion.div>
 

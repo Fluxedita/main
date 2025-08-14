@@ -120,9 +120,11 @@ export function FeatureComparison() {
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Comprehensive Feature Comparison</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Compare Plans, Confidently</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Compare all features across our packages to find the perfect fit for your specific needs and requirements.
+            All plans are fully guided (beginner → expert), include a reusable license for the purchaser, client handover &
+            editability, and 12 months of safe app‑code updates that never overwrite your content or database. Compare
+            features below to pick the right fit.
           </p>
         </div>
 
@@ -137,9 +139,9 @@ export function FeatureComparison() {
                   <table className="w-full">
                     <thead>
                       <tr className="border-b border-gray-200">
-                        <th className="text-left py-4 px-6 font-semibold text-gray-900 min-w-[300px]">Feature</th>
+                        <th scope="col" className="text-left py-4 px-6 font-semibold text-gray-900 min-w-[300px]">Feature</th>
                         {plans.map((plan) => (
-                          <th key={plan.id} className="text-center py-4 px-4 min-w-[120px]">
+                          <th scope="col" key={plan.id} className="text-center py-4 px-4 min-w-[120px]">
                             <div className="flex flex-col items-center">
                               <div
                                 className={`w-8 h-8 ${plan.color} rounded-full flex items-center justify-center text-white font-bold text-sm mb-1`}
@@ -155,7 +157,7 @@ export function FeatureComparison() {
                     <tbody>
                       {category.features.map((feature, featureIndex) => (
                         <tr key={featureIndex} className="border-b border-gray-100 hover:bg-gray-50">
-                          <td className="py-4 px-6 font-medium text-gray-900">{feature.name}</td>
+                          <th scope="row" className="py-4 px-6 font-medium text-gray-900 text-left">{feature.name}</th>
                           <td className="py-4 px-4 text-center">
                             {feature.standard ? (
                               <Check className="h-5 w-5 text-green-500 mx-auto" />

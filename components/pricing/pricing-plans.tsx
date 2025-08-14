@@ -33,6 +33,13 @@ export const plans = [
       "Basic analytics and reporting tools",
       "Unlimited page length with unlimited sections"
     ],
+    // Sitewide value props
+    includedExtras: [
+      "Fully guided onboarding and live documentation",
+      "Client handover & editability built-in",
+      "Reusable license for purchaser (non-transferable)",
+      "12 months of safe app‑code updates (never overwrites your content or database)",
+    ],
     notIncluded: [
       "Priority support options",
       "Phone or live chat support",
@@ -67,7 +74,7 @@ export const plans = [
     ],
     valueProposition: {
       title: "Exceptional Value: Unlimited Reusability",
-      text: "This package offers **unlimited reusability by the purchaser** across any number of your own projects, **plus 1 year of free updates**. Build once, deploy many times, saving countless hours and costs. This license is non-transferable.",
+      text: "This package offers **unlimited reusability by the purchaser** across any number of your own projects, **plus 12 months of safe app‑code updates** that never overwrite your content or database. Build once, deploy many times. License is non‑transferable.",
     },
     previewDescription: "Single page design with live editing capabilities and intuitive controls for immediate results",
     imagePlaceholder: "https://res.cloudinary.com/dv9g1csum/image/upload/v1753705261/zihuggjouxnyhkagv4no.png",
@@ -105,6 +112,12 @@ export const plans = [
       "Supabase integration with authentication system",
       "Stripe integration ready for payment processing",
     ],
+    includedExtras: [
+      "Fully guided onboarding and live documentation",
+      "Client handover & editability built-in",
+      "Reusable license for purchaser (non-transferable)",
+      "12 months of safe app‑code updates (never overwrites your content or database)",
+    ],
     notIncluded: [
       "Unlimited custom pages with dynamic content",
       "Advanced page management tools and controls",
@@ -135,7 +148,7 @@ export const plans = [
     ],
     valueProposition: {
       title: "Exceptional Value: Unlimited Reusability",
-      text: "This package offers **unlimited reusability by the purchaser** across any number of your own projects, **plus 1 year of free updates**. Build once, deploy many times, saving countless hours and costs. This license is non-transferable.",
+      text: "This package offers **unlimited reusability by the purchaser** across any number of your own projects, **plus 12 months of safe app‑code updates** that never overwrite your content or database. Build once, deploy many times, saving countless hours and costs. This license is non-transferable.",
     },
     previewDescription: "Root pages design with live editing capabilities and intuitive controls for immediate results",
     imagePlaceholder: "https://res.cloudinary.com/dv9g1csum/image/upload/v1753705262/jnqzrqvxh3kg92q6mcik.png",
@@ -180,6 +193,12 @@ export const plans = [
       "Custom integrations and API access",
       "Advanced SEO tools and optimization features",
     ],
+    includedExtras: [
+      "Fully guided onboarding and live documentation",
+      "Client handover & editability built-in",
+      "Reusable license for purchaser (non-transferable)",
+      "12 months of safe app‑code updates (never overwrites your content or database)",
+    ],
     notIncluded: [
       "Media root pages and gallery systems",
       "Member comments and interaction systems",
@@ -206,7 +225,7 @@ export const plans = [
     ],
     valueProposition: {
       title: "Exceptional Value: Unlimited Reusability",
-      text: "This package offers **unlimited reusability by the purchaser** across any number of your own projects, **plus 1 year of free updates**. Build once, deploy many times, saving countless hours and costs. This license is non-transferable.",
+      text: "This package offers **unlimited reusability by the purchaser** across any number of your own projects, **plus 12 months of safe app‑code updates** that never overwrite your content or database. Build once, deploy many times, saving countless hours and costs. This license is non-transferable.",
     },
     previewDescription: "Multi page design with live editing capabilities and intuitive controls for immediate results",
     imagePlaceholder: "https://res.cloudinary.com/dv9g1csum/image/upload/v1753705261/jyamglihxgcue2o9sock.png",
@@ -246,6 +265,12 @@ export const plans = [
       "Admin comments console for community management",
       "Advanced Cloudinary features with optimization",
     ],
+    includedExtras: [
+      "Fully guided onboarding and live documentation",
+      "Client handover & editability built-in",
+      "Reusable license for purchaser (non-transferable)",
+      "12 months of safe app‑code updates (never overwrites your content or database)",
+    ],
     premiumBenefits: [
       "This package includes absolutely everything available",
       "No feature limitations or usage restrictions",
@@ -284,7 +309,7 @@ export const plans = [
     ],
     valueProposition: {
       title: "Exceptional Value: Unlimited Reusability",
-      text: "This package offers **unlimited reusability by the purchaser** across any number of your own projects, **plus 1 year of free updates**. Build once, deploy many times, saving countless hours and costs. This license is non-transferable.",
+      text: "This package offers **unlimited reusability by the purchaser** across any number of your own projects, **plus 12 months of safe app‑code updates** that never overwrite your content or database. Build once, deploy many times, saving countless hours and costs. This license is non-transferable.",
     },
     previewDescription: "Premium creative suite with live editing and advanced media features",
     imagePlaceholder: "/multi_page_placeholder.png",
@@ -476,6 +501,25 @@ export function PricingPlans() {
                             </motion.li>
                           ))}
                         </ul>
+                        {allExpanded && plan.includedExtras && (
+                          <div className="mt-5">
+                            <h5 className="font-semibold text-blue-700 mb-2 text-sm">📦 Platform Essentials:</h5>
+                            <ul className="space-y-2">
+                              {plan.includedExtras.map((extra, extraIndex) => (
+                                <motion.li
+                                  key={extraIndex}
+                                  className="flex items-start text-sm"
+                                  initial={{ opacity: 0, x: -20 }}
+                                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                                  transition={{ delay: index * 0.1 + extraIndex * 0.03 + 0.9 }}
+                                >
+                                  <Check className="h-4 w-4 text-blue-500 mr-2 mt-0.5 flex-shrink-0" />
+                                  <span className="text-gray-700">{extra}</span>
+                                </motion.li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
                       </div>
                       {/* Only show the rest of the card if expanded */}
                       {allExpanded && (
@@ -599,6 +643,16 @@ export function PricingPlans() {
                     ))}
                   </ul>
                 </div>
+                {selectedPlan.includedExtras && (
+                  <div className="mb-4">
+                    <h4 className="font-semibold text-blue-700 mb-2 text-sm">Platform Essentials:</h4>
+                    <ul className="list-disc pl-5 space-y-1 text-gray-700 text-sm">
+                      {selectedPlan.includedExtras.map((extra: string, i: number) => (
+                        <li key={i}>{extra}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
                 {selectedPlan.notIncluded && (
                   <div className="mb-4">
                     <h4 className="font-semibold text-red-700 mb-2 text-sm">❌ Not Included:</h4>

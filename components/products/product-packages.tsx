@@ -112,6 +112,12 @@ export function ProductPackages() {
                   >
                     <h2 className="text-3xl font-bold text-gray-900 mb-2">{plan.name}</h2>
                     <h3 className="text-xl text-blue-600 font-semibold mb-4">{plan.subtitle}</h3>
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      <Badge variant="secondary" className="text-xs">Guided</Badge>
+                      <Badge variant="secondary" className="text-xs">Client Handover</Badge>
+                      <Badge variant="secondary" className="text-xs">Reusable License</Badge>
+                      <Badge variant="secondary" className="text-xs">12 mo Safe Updates</Badge>
+                    </div>
                   </motion.div>
 
                   <motion.div
@@ -206,6 +212,8 @@ export function ProductPackages() {
                             ? 'https://custom-rootpage-package.vercel.app/'
                             : plan.id === 'multi-page-package'
                             ? 'https://custom-multipage-package.vercel.app/'
+                            : plan.id === 'premium-page-package'
+                            ? 'https://premium-content-portfolio.vercel.app/'
                             : '#'}
                           target="_blank" 
                           rel="noopener noreferrer"
@@ -378,6 +386,16 @@ export function ProductPackages() {
                   ))}
                 </ul>
               </div>
+              {selectedPlan.includedExtras && (
+                <div className="mb-4">
+                  <h4 className="font-semibold text-blue-700 mb-2 text-sm">Platform Essentials:</h4>
+                  <ul className="list-disc pl-5 space-y-1 text-gray-700 text-sm">
+                    {selectedPlan.includedExtras.map((extra: string, i: number) => (
+                      <li key={i}>{extra}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               {selectedPlan.notIncluded && (
                 <div className="mb-4">
                   <h4 className="font-semibold text-red-700 mb-2 text-sm">Not Included:</h4>

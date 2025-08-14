@@ -100,10 +100,10 @@ export function TechStack() {
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Built with Modern Technology</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">All‑in‑One, Full‑Stack Foundations</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Every Fluxedita package is powered by cutting-edge technologies that ensure performance, scalability, and
-            developer happiness for long-term success.
+            Built on modern tech to deliver performance and scalability — fully guided from beginner → expert with a reusable license,
+            client handover & editability, and 12 months of safe app‑code updates.
           </p>
         </div>
 
@@ -137,9 +137,9 @@ export function TechStack() {
         </div>
 
         <div className="text-center max-w-4xl mx-auto">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">Built-In Developer & Creator Tools</h3>
+          <h3 className="text-2xl font-bold text-gray-900 mb-4">All‑in‑One, Fully Guided Tools</h3>
           <p className="text-xl text-gray-600">
-            Everything you need to create, manage, and scale your web presence — all in one powerful platform.
+            Create, manage, and scale—guided at every step. Reusable license, client handover & editability, and safe app‑code updates included.
           </p>
         </div>
       </div>

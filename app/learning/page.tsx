@@ -19,10 +19,10 @@ export default function LearningPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-              Get Started
+              <a href="/products">Get Started</a>
             </Button>
             <Button size="lg" variant="outline">
-              View Pricing
+              <a href="/pricing">View Pricing</a>
             </Button>
           </div>
         </div>

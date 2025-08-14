@@ -12,21 +12,21 @@ export function PricingHero() {
           <div className="flex justify-center mb-6">
             <div className="flex items-center space-x-2 bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium">
               <DollarSign className="h-4 w-4" />
-              <span>Simple, Transparent Pricing</span>
+              <span>All-in-one, Fully Guided Plans</span>
             </div>
           </div>
 
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            Choose Your
+            Guided, All‑in‑One
             <br />
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Perfect Plan
+              Plans for Every Stage
             </span>
           </h1>
 
           <p className="text-xl text-gray-600 mb-4 max-w-4xl mx-auto leading-relaxed">
-            Empower your online presence with our straightforward pricing plans, designed to fit every stage of your
-            growth.
+            All packages are fully guided (beginner → expert), include reusable licenses for the purchaser, client
+            handover & editability, and 12 months of app‑code updates that never overwrite your content or database.
           </p>
           <div className="mb-8">
             <button
@@ -43,15 +43,15 @@ export function PricingHero() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Free Updates for 12 Months</DialogTitle>
-            <div className="text-sm text-muted-foreground">
+            <DialogDescription>
               <ul className="list-disc pl-5 space-y-2 mt-4 text-gray-700">
                 <li>All packages include free updates for 12 months from your purchase date.</li>
-                <li>Updates can be accessed and seamlessly integrated via GitHub, so you always have the latest features and improvements.</li>
-                <li>Your website content and database are never overwritten—updates only affect the app code, not your data.</li>
-                <li>Enjoy peace of mind knowing your site stays secure and up-to-date, with no disruption to your content or users. Should you choose to update your plan.</li>
-                <li>You will be notified via email of any updates to your plan. Then you can decide whether to update your plan or not.</li>
+                <li>Updates are delivered via GitHub for seamless integration of the latest features and improvements.</li>
+                <li>Safe app‑code updates: your content and database are never overwritten—only app code is changed.</li>
+                <li>Choose when to update. You’ll receive email notifications when updates are available, with full control to apply them.</li>
+                <li>Peace of mind: stay secure and up to date without disrupting your site or users.</li>
               </ul>
-            </div>
+            </DialogDescription>
           </DialogHeader>
         </DialogContent>
       </Dialog>

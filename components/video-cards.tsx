@@ -16,14 +16,14 @@ const videoCards: VideoCard[] = [
   {
     title: "Getting Started - Short Version",
     description: "Quick installation and setup guide",
-    videoId: "d-vhR_wzNho",
+    videoId: "pi3Nk0-_NsU",
     buttonText: "Installation Guide - Short",
     dialogTitle: "Installation Video - Short"
   },
   {
     title: "Install Guide - Full",
     description: "Complete installation walkthrough",
-    videoId: "C2usSihBXTU",
+    videoId: "pi3Nk0-_NsU",
     buttonText: "Install Guide - Full",
     dialogTitle: "Install Guide - Full"
   },

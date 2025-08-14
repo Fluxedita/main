@@ -40,7 +40,7 @@ const introHighlights = [
   {
     icon: Edit3,
     title: "Admin Editable",
-    description: "Admins can add, edit, reorder, and remove sections directly from the frontend.",
+    description: "Admins can add, edit, reorder (using up/down controls), and remove sections directly from the frontend.",
     color: "from-purple-500 to-violet-600",
   },
 ]
@@ -75,8 +75,11 @@ const fullContent = (
       <li>To add a new section type, create a new React component and update the registry; backend only stores JSONB.</li>
     </ul>
     <h3 className="text-2xl font-bold text-gray-900 mb-3 mt-12">Admin Edit Controls</h3>
+    <div className="mb-4 p-4 rounded-lg border border-blue-200 bg-blue-50 text-sm text-blue-800">
+      Tip: Reordering uses the up/down arrow controls. Drag-and-drop is not supported.
+    </div>
     <ul className="list-disc list-inside ml-4 mt-2 text-lg text-gray-700 max-w-3xl mx-auto mb-8">
-      <li>Admins use floating action buttons (FABs) to add, edit, reorder, or remove sections.</li>
+      <li>Admins use floating action buttons (FABs) to add, edit, reorder (via up/down controls), or remove sections.</li>
       <li>Section editors are context-aware, showing the correct form fields for each type.</li>
       <li>Changes are saved to the appropriate table and reflected in real time.</li>
     </ul>

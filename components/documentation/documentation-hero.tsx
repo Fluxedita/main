@@ -44,12 +44,12 @@ export function DocumentationHero() {
               >
                 <BookOpen className="h-4 w-4" />
               </motion.div>
-              <span>Comprehensive Guides</span>
+              <span>Guided • Beginner → Expert</span>
             </motion.div>
           </motion.div>
 
           <motion.h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6" variants={itemVariants}>
-            Fluxedita
+            All‑in‑One, Fully Guided
             <br />
             <motion.span
               className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
@@ -68,8 +68,8 @@ export function DocumentationHero() {
           </motion.h1>
 
           <motion.p className="text-xl text-gray-600 mb-8 max-w-4xl mx-auto leading-relaxed" variants={itemVariants}>
-            Find everything you need to get started, troubleshoot issues, and master your Fluxedita website. Our guides
-            are designed for all skill levels, from beginners to advanced developers.
+            Start to mastery — guided at every step. Learn how to edit live in the browser, hand over to clients safely,
+            reuse your packages across projects, and apply app‑code updates without ever overwriting your content or database.
           </motion.p>
         </motion.div>
       </div>
