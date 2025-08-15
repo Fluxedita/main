@@ -1,14 +1,35 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Menu, X, BookOpen, GraduationCap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { ChevronDown } from "lucide-react"
 import Link from "next/link"
+import { getSupabaseBrowserClient } from "@/lib/supabase/browser"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isAuthed, setIsAuthed] = useState<boolean>(false)
+
+  useEffect(() => {
+    let mounted = true
+    const supabase = getSupabaseBrowserClient()
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (!mounted) return
+      setIsAuthed(!!user)
+    })
+    const { data: sub } = supabase.auth.onAuthStateChange((_ev, session) => {
+      setIsAuthed(!!session?.user)
+    })
+    return () => { mounted = false; sub.subscription?.unsubscribe?.() }
+  }, [])
+
+  const handleSignOut = async () => {
+    const supabase = getSupabaseBrowserClient()
+    await supabase.auth.signOut()
+    window.location.href = "/"
+  }
 
   return (
     <>
@@ -107,12 +128,23 @@ export function Header() {
           </nav>
 
           <div className="hidden lg:flex items-center space-x-4">
-            <Button asChild variant="ghost">
-              <Link href="/signin">Sign In</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/products">Get Started</Link>
-            </Button>
+            {isAuthed ? (
+              <>
+                <Button asChild variant="ghost">
+                  <Link href="/account">Account</Link>
+                </Button>
+                <Button variant="outline" onClick={handleSignOut}>Sign Out</Button>
+              </>
+            ) : (
+              <>
+                <Button asChild variant="ghost">
+                  <Link href="/signin">Sign In</Link>
+                </Button>
+                <Button asChild>
+                  <Link href="/products">Get Started</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           <div className="lg:hidden">
@@ -165,12 +197,25 @@ export function Header() {
                 Contact
               </Link>
               <div className="pt-4 pb-2 space-y-2">
-                <Button asChild variant="ghost" className="w-full">
-                  <Link href="/signin">Sign In</Link>
-                </Button>
-                <Button asChild className="w-full">
-                  <Link href="/products">Get Started</Link>
-                </Button>
+                {isAuthed ? (
+                  <>
+                    <Button asChild variant="ghost" className="w-full">
+                      <Link href="/account">Account</Link>
+                    </Button>
+                    <Button className="w-full" variant="outline" onClick={handleSignOut}>
+                      Sign Out
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button asChild variant="ghost" className="w-full">
+                      <Link href="/signin">Sign In</Link>
+                    </Button>
+                    <Button asChild className="w-full">
+                      <Link href="/products">Get Started</Link>
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </div>

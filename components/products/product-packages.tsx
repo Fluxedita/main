@@ -129,7 +129,7 @@ export function ProductPackages() {
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-3">Key Features:</h4>
                       <ul className="space-y-2">
-                        {plan.features.map((feature, featureIndex) => (
+                        {(plan.features ?? []).map((feature, featureIndex) => (
                           <motion.li
                             key={featureIndex}
                             className="flex items-start"
@@ -149,7 +149,7 @@ export function ProductPackages() {
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-3">Perfect For:</h4>
                       <ul className="space-y-2">
-                        {plan.perfectFor.map((use, useIndex) => (
+                        {(plan.perfectFor ?? []).map((use, useIndex) => (
                           <motion.li
                             key={useIndex}
                             className="flex items-center"

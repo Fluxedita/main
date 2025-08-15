@@ -9,13 +9,20 @@ import { useInView } from "framer-motion"
 import { useRef, useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 
+// Lifetime slots configured via environment at build-time (client-safe NEXT_PUBLIC vars)
+const LIFETIME_SLOTS_TOTAL = Number(process.env.NEXT_PUBLIC_LIFETIME_SLOTS_TOTAL ?? 15)
+const LIFETIME_SLOTS_LEFT = Math.max(
+  0,
+  Math.min(LIFETIME_SLOTS_TOTAL, Number(process.env.NEXT_PUBLIC_LIFETIME_SLOTS_LEFT ?? LIFETIME_SLOTS_TOTAL))
+)
+
 export const plans = [
   {
     id: "landing-page-package",
     name: "Landing Page Package",
     subtitle: "Launch your online presence with a single, stunning landing page design.",
-    price: "£99",
-    period: "One-time payment",
+    price: "£39.99",
+    period: "per month",
     icon: Zap,
     color: "from-gray-400 to-gray-600",
     badge: "💡 Quick Launch",
@@ -85,8 +92,8 @@ export const plans = [
     id: "root-page-package",
     name: "Root Page Package",
     subtitle: "Grow your business with essential features and integrations.",
-    price: "£299",
-    period: "One-time payment",
+    price: "£69.99",
+    period: "per month",
     icon: Users,
     color: "from-blue-500 to-blue-600",
     badge: "🏆 Best Value",
@@ -159,8 +166,8 @@ export const plans = [
     id: "multi-page-package",
     name: "Multi Page Package",
     subtitle: "Scale your operations with advanced management and customization.",
-    price: "£599",
-    period: "One-time payment",
+    price: "£99",
+    period: "per month",
     icon: Building,
     color: "from-purple-500 to-purple-600",
     badge: "🚀 Scale Ready",
@@ -234,14 +241,14 @@ export const plans = [
   },
   {
     id: "premium-page-package",
-    name: "Premium Page Package",
-    subtitle: "Unlock the full potential with complete creative control and support.",
-    price: "£999",
-    period: "One-time payment",
+    name: "Fluxedita Premium (Early Adopter)",
+    subtitle: "All features, hosting, updates, and priority support—launch in days, not months.",
+    price: "$199/mo",
+    period: "or $1,999/yr",
     icon: Crown,
     color: "from-orange-500 to-red-600",
-    badge: "⭐ Full Power",
-    badgeDesc: "Everything included with no limitations or restrictions",
+    badge: "🎉 Founders Price",
+    badgeDesc: "Limited-time early adopter pricing with grandfathered renewals",
     premium: true,
     included: [
       "Live page editing with real-time preview",
@@ -316,6 +323,65 @@ export const plans = [
     exampleUrl: "#",
     paymentLink: "#",
   },
+  {
+    id: "agency-saas",
+    name: "Agency / Enterprise",
+    subtitle: "For multiple sites, higher limits, custom domains, and SLA options.",
+    price: "$399/mo",
+    period: "or $3,999/yr",
+    icon: Building,
+    color: "from-sky-600 to-indigo-700",
+    badge: "🏢 Scale & Support",
+    badgeDesc: "Higher limits, faster support, optional SSO",
+    premium: true,
+    included: [
+      "Everything in Fluxedita Premium",
+      "Multiple sites/workspaces support",
+      "Higher member, storage, and bandwidth limits",
+      "Priority support with faster response targets",
+      "Custom domains and advanced configuration",
+      "Optional SSO and enterprise controls",
+      "SLA options and dedicated success manager",
+    ],
+    includedExtras: [
+      "Fully guided onboarding and live documentation",
+      "Client handover & editability built-in",
+      "12 months of safe app‑code updates (never overwrites your content or database)",
+    ],
+    previewDescription: "Agency-grade plan for teams with higher scale and governance needs",
+    imagePlaceholder: "/agency_placeholder.png",
+    exampleUrl: "#",
+    paymentLink: "#",
+  },
+  {
+    id: "lifetime-early",
+    name: "Lifetime (Early Adopter)",
+    subtitle: "One-time payment. All features and updates—for life.",
+    price: "$2,499",
+    period: "One-time lifetime",
+    icon: Crown,
+    color: "from-emerald-500 to-emerald-700",
+    badge: "🔒 Lifetime Access",
+    badgeDesc: "First 15 customers only—never pay again",
+    premium: true,
+    lifetimeSlotsLeft: LIFETIME_SLOTS_LEFT,
+    lifetimeSlotsTotal: LIFETIME_SLOTS_TOTAL,
+    included: [
+      "Everything in Fluxedita Premium",
+      "All future updates and features included",
+      "Priority support (founders tier)",
+      "Founders badge on your account",
+    ],
+    includedExtras: [
+      "Fully guided onboarding and live documentation",
+      "Client handover & editability built-in",
+      "12 months of safe app‑code updates (never overwrites your content or database)",
+    ],
+    previewDescription: "Lock in lifetime access—limited founder slots available",
+    imagePlaceholder: "/lifetime_placeholder.png",
+    exampleUrl: "#",
+    paymentLink: "#",
+  },
 ]
 
 export type Plan = typeof plans[number];
@@ -362,6 +428,46 @@ export function PricingPlans() {
   const [allExpanded, setAllExpanded] = useState(false)
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null)
   const [modalOpen, setModalOpen] = useState(false)
+
+  function mapPlanIdToSlug(planId: string): 'landing' | 'root' | 'multi' | 'premium' | 'agency' | 'lifetime' {
+    switch (planId) {
+      case 'landing-page-package':
+        return 'landing'
+      case 'root-page-package':
+        return 'root'
+      case 'multi-page-package':
+        return 'multi'
+      case 'premium-page-package':
+        return 'premium'
+      case 'agency-saas':
+        return 'agency'
+      case 'lifetime-early':
+        return 'lifetime'
+      default:
+        return 'landing'
+    }
+  }
+
+  async function startCheckout(planId: string) {
+    try {
+      const slug = mapPlanIdToSlug(planId)
+      const res = await fetch('/api/stripe/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug }),
+      })
+      const data = await res.json()
+      if (res.ok && data?.url) {
+        window.location.href = data.url as string
+      } else {
+        console.error('Checkout error', data)
+        alert(data?.error || 'Unable to start checkout')
+      }
+    } catch (err: any) {
+      console.error(err)
+      alert('Unexpected error creating checkout session')
+    }
+  }
 
   return (
     <section className="py-20 bg-white" ref={ref}>
@@ -451,6 +557,17 @@ export function PricingPlans() {
                       >
                         {plan.subtitle}
                       </motion.p>
+                      {typeof (plan as any).lifetimeSlotsLeft === 'number' && typeof (plan as any).lifetimeSlotsTotal === 'number' && (
+                        <div className="mb-2">
+                          {(plan as any).lifetimeSlotsLeft > 0 ? (
+                            <Badge variant="outline" className="text-xs">
+                              Limited: {(plan as any).lifetimeSlotsLeft} / {(plan as any).lifetimeSlotsTotal} left
+                            </Badge>
+                          ) : (
+                            <Badge variant="destructive" className="text-xs">Sold Out</Badge>
+                          )}
+                        </div>
+                      )}
 
                       <motion.div
                         className="mb-4"
@@ -592,6 +709,7 @@ export function PricingPlans() {
                                     : ""
                               }`}
                               variant={plan.popular || plan.premium ? "default" : "outline"}
+                              disabled={(plan as any).lifetimeSlotsLeft !== undefined && (plan as any).lifetimeSlotsLeft === 0}
                               onClick={() => {
                                 setSelectedPlan(plan)
                                 setModalOpen(true)
@@ -603,7 +721,7 @@ export function PricingPlans() {
                                 whileHover={{ x: "100%" }}
                                 transition={{ duration: 0.5 }}
                               />
-                              <span className="relative z-10 px-4 py-2">Get Started</span>
+                              <span className="relative z-10 px-4 py-2">{(plan as any).lifetimeSlotsLeft !== undefined && (plan as any).lifetimeSlotsLeft === 0 ? 'Sold Out' : 'Get Started'}</span>
                             </Button>
                           </motion.div>
                         </>
@@ -664,11 +782,8 @@ export function PricingPlans() {
                   </div>
                 )}
                 <DialogFooter>
-                  {/* Replace '#' with the Stripe Payment Link for this plan when available */}
-                  <Button asChild className="w-full">
-                    <a href={selectedPlan.paymentLink} target="_blank" rel="noopener noreferrer">
-                      Proceed to Payment
-                    </a>
+                  <Button className="w-full" onClick={() => selectedPlan && startCheckout((selectedPlan as any).id)}>
+                    Proceed to Payment
                   </Button>
                 </DialogFooter>
               </>
