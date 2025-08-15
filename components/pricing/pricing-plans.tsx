@@ -463,14 +463,14 @@ export function PricingPlans() {
           toast({
             title: 'Please sign in to continue',
             description: 'Please create your account prior to purchasing.',
-            duration: 1800,
+            duration: 3500,
           })
         } catch {}
         const current = typeof window !== 'undefined' ? window.location.origin + '/pricing' : '/pricing'
         const nextUrl = `/signin?next=${encodeURIComponent(`${current}?checkout=${slug}`)}`
         setTimeout(() => {
           window.location.href = nextUrl
-        }, 900)
+        }, 3500)
         return
       }
       const data = await res.json()
@@ -514,14 +514,14 @@ export function PricingPlans() {
           toast({
             title: 'Please sign in to continue',
             description: 'Please create your account prior to purchasing.',
-            duration: 1800,
+            duration: 3500,
           })
         } catch {}
         const current = typeof window !== 'undefined' ? window.location.origin + '/pricing' : '/pricing'
         const nextUrl = `/signin?next=${encodeURIComponent(`${current}?checkout=${slug}`)}`
         setTimeout(() => {
           window.location.href = nextUrl
-        }, 900)
+        }, 3500)
         return
       }
       const data = await res.json()
