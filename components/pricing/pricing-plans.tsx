@@ -6,8 +6,9 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Check, X, Zap, Users, Building, Crown } from "lucide-react"
 import { motion, easeOut } from "framer-motion"
 import { useInView } from "framer-motion"
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
+import { useToast } from "@/components/ui/use-toast"
 
 // Lifetime slots configured via environment at build-time (client-safe NEXT_PUBLIC vars)
 const LIFETIME_SLOTS_TOTAL = Number(process.env.NEXT_PUBLIC_LIFETIME_SLOTS_TOTAL ?? 15)
@@ -428,6 +429,7 @@ export function PricingPlans() {
   const [allExpanded, setAllExpanded] = useState(false)
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null)
   const [modalOpen, setModalOpen] = useState(false)
+  const { toast } = useToast()
 
   function mapPlanIdToSlug(planId: string): 'landing' | 'root' | 'multi' | 'premium' | 'agency' | 'lifetime' {
     switch (planId) {
@@ -446,6 +448,55 @@ export function PricingPlans() {
       default:
         return 'landing'
     }
+
+  // Direct slug checkout (used for resume flow via ?checkout=slug)
+  async function startCheckoutBySlug(slug: 'landing' | 'root' | 'multi' | 'premium' | 'agency' | 'lifetime') {
+    try {
+      const res = await fetch('/api/stripe/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ slug }),
+      })
+      if (res.status === 401) {
+        try {
+          toast({
+            title: 'Please sign in to continue',
+            description: 'Please create your account prior to purchasing.',
+            duration: 1800,
+          })
+        } catch {}
+        const current = typeof window !== 'undefined' ? window.location.origin + '/pricing' : '/pricing'
+        const nextUrl = `/signin?next=${encodeURIComponent(`${current}?checkout=${slug}`)}`
+        setTimeout(() => {
+          window.location.href = nextUrl
+        }, 900)
+        return
+      }
+      const data = await res.json()
+      if (res.ok && data?.url) {
+        window.location.href = data.url as string
+      } else {
+        console.error('Checkout error', data)
+        alert(data?.error || 'Unable to start checkout')
+      }
+    } catch (err: any) {
+      console.error(err)
+      alert('Unexpected error creating checkout session')
+    }
+  }
+
+  // Auto-resume checkout after sign-in if ?checkout=<slug> is present
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const params = new URLSearchParams(window.location.search)
+    const checkoutSlug = params.get('checkout') as ReturnType<typeof mapPlanIdToSlug> | null
+    if (checkoutSlug) {
+      // small delay to allow page UI to mount before redirecting
+      const t = setTimeout(() => startCheckoutBySlug(checkoutSlug as any), 200)
+      return () => clearTimeout(t)
+    }
+  }, [])
   }
 
   async function startCheckout(planId: string) {
@@ -454,8 +505,25 @@ export function PricingPlans() {
       const res = await fetch('/api/stripe/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ slug }),
       })
+      if (res.status === 401) {
+        // Not authenticated: briefly toast, then redirect to sign-in with resume param
+        try {
+          toast({
+            title: 'Please sign in to continue',
+            description: 'Please create your account prior to purchasing.',
+            duration: 1800,
+          })
+        } catch {}
+        const current = typeof window !== 'undefined' ? window.location.origin + '/pricing' : '/pricing'
+        const nextUrl = `/signin?next=${encodeURIComponent(`${current}?checkout=${slug}`)}`
+        setTimeout(() => {
+          window.location.href = nextUrl
+        }, 900)
+        return
+      }
       const data = await res.json()
       if (res.ok && data?.url) {
         window.location.href = data.url as string
