@@ -126,7 +126,7 @@ export async function POST(req: NextRequest) {
         } else {
           const subscriptionId = session.subscription as string
           // fetch subscription for period end & price
-          const sub = await stripe.subscriptions.retrieve(subscriptionId)
+          const sub = (await stripe.subscriptions.retrieve(subscriptionId)) as unknown as Stripe.Subscription
           await upsertSubscriptionEntitlement(
             supabase,
             userId,
@@ -135,7 +135,7 @@ export async function POST(req: NextRequest) {
             stripeCustomerId,
             subscriptionId,
             (sub.items.data[0]?.price?.id as string) || '',
-            sub.current_period_end || null
+            (sub as any).current_period_end || null
           )
         }
         break

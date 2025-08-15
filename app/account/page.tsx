@@ -7,7 +7,7 @@ export const runtime = "nodejs"
 export default async function AccountPage({
   searchParams,
 }: {
-  searchParams?: { [key: string]: string | string[] | undefined }
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
   const supabase = getSupabaseServerClient()
   const {
@@ -24,7 +24,8 @@ export default async function AccountPage({
     .eq("id", user.id)
     .maybeSingle()
 
-  const purchaseSuccess = searchParams?.purchase === "success"
+  const params = await searchParams
+  const purchaseSuccess = params?.purchase === "success"
   return (
     <main className="max-w-4xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-6">Account</h1>

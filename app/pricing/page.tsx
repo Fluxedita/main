@@ -8,13 +8,14 @@ import Link from "next/link"
 import { RoiBanner } from "@/components/roi/roi-banner"
 import { RoiCalculator } from "@/components/ui/roi-calculator"
 
-export default function PricingPage({
+export default async function PricingPage({
   searchParams,
 }: {
-  searchParams?: { [key: string]: string | string[] | undefined }
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
-  const canceled = searchParams?.canceled === "1"
-  const success = searchParams?.success === "1"
+  const params = await searchParams
+  const canceled = params?.canceled === "1"
+  const success = params?.success === "1"
   return (
     <div className="min-h-screen bg-white">
       <Header />
