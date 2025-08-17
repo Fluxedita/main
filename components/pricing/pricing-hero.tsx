@@ -43,14 +43,16 @@ export function PricingHero() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Free Updates for 12 Months</DialogTitle>
-            <DialogDescription>
-              <ul className="list-disc pl-5 space-y-2 mt-4 text-gray-700">
-                <li>All packages include free updates for 12 months from your purchase date.</li>
-                <li>Updates are delivered via GitHub for seamless integration of the latest features and improvements.</li>
-                <li>Safe app‑code updates: your content and database are never overwritten—only app code is changed.</li>
-                <li>Choose when to update. You’ll receive email notifications when updates are available, with full control to apply them.</li>
-                <li>Peace of mind: stay secure and up to date without disrupting your site or users.</li>
-              </ul>
+            <DialogDescription asChild>
+              <div>
+                <ul className="list-disc pl-5 space-y-2 mt-4 text-gray-700">
+                  <li>All packages include free updates for 12 months from your purchase date.</li>
+                  <li>Updates will appear in your <strong>Account → Downloads</strong> section for each entitled package.</li>
+                  <li>You choose when to apply an update. We’ll email you when updates are available so you can review and install at your convenience.</li>
+                  <li>Delivered as downloadable updates in your account with safe app‑code changes only—your content and database are never overwritten.</li>
+                  <li>Peace of mind: stay secure and up to date without disrupting your site or users.</li>
+                </ul>
+              </div>
             </DialogDescription>
           </DialogHeader>
         </DialogContent>

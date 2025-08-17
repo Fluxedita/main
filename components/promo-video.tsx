@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Play } from 'lucide-react';
-import { VideoCards } from './video-cards';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 export function PromoVideo() {
@@ -64,10 +63,7 @@ export function PromoVideo() {
         </DialogContent>
       </Dialog>
 
-      {/* Video Cards Section */}
-      <div className="mt-16">
-        <VideoCards />
-      </div>
+      {/* Video Cards Section removed per request */}
     </section>
   );
 }

@@ -684,8 +684,7 @@ CLOUDINARY_API_SECRET=your_cloudinary_api_secret`}
       <h3 className="text-2xl font-bold text-gray-900 mt-12 mb-3">Support</h3>
       <p>For support and assistance:</p>
       <ul className="list-disc list-inside ml-4 mt-2">
-        <li>Open an issue in the GitHub repository</li>
-        <li>Contact the development team at support@your-domain.com</li>
+        <li>Contact us at <a href="mailto:support@fluxedita.com" className="text-blue-600 hover:underline">support@fluxedita.com</a></li>
         <li>
           Check our{" "}
           <a

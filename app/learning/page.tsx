@@ -113,7 +113,7 @@ export default function LearningPage() {
               "Opening the code in VS Code",
               "Connecting Supabase",
               "Adding your first section or page",
-              "Pushing to GitHub or deploying"
+              "Optionally connecting a remote (e.g., GitHub) or deploying"
             ].map((item, index) => (
               <div key={index} className="flex items-start">
                 <CheckCircle className="h-6 w-6 text-green-500 mr-3 mt-0.5 flex-shrink-0" />

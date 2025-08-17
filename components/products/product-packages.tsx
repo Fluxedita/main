@@ -11,6 +11,7 @@ import { easeOut } from "framer-motion"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { useState } from "react"
 import { plans, Plan } from "../pricing/pricing-plans"
+import { useToast } from "@/components/ui/use-toast"
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -54,6 +55,35 @@ export function ProductPackages() {
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null)
   const [modalOpen, setModalOpen] = useState(false)
   const [lightboxOpen, setLightboxOpen] = useState<string | null>(null)
+  const { toast } = useToast()
+
+  async function startCheckout(slug: string) {
+    try {
+      const res = await fetch('/api/stripe/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug }),
+      })
+      if (res.status === 401) {
+        // Close modal and redirect immediately to sign-in with resume checkout
+        setModalOpen(false)
+        const current = typeof window !== 'undefined' ? window.location.origin + '/products' : '/products'
+        const nextUrl = `/signin?next=${encodeURIComponent(`${current}?checkout=${slug}`)}`
+        window.location.href = nextUrl
+        return
+      }
+      const data = await res.json()
+      if (res.ok && data?.url) {
+        window.location.href = data.url as string
+      } else {
+        console.error('Checkout error', data)
+        alert(data?.error || 'Unable to start checkout')
+      }
+    } catch (err: any) {
+      console.error(err)
+      alert('Unexpected error creating checkout session')
+    }
+  }
 
   return (
     <section className="py-20 bg-white" ref={ref}>
@@ -180,22 +210,23 @@ export function ProductPackages() {
                         size="lg"
                         className={`bg-gradient-to-r ${plan.color} hover:opacity-90 relative overflow-hidden group`}
                         onClick={() => { setSelectedPlan(plan); setModalOpen(true); }}
+                        aria-label={`View more details for ${plan.name}`}
                       >
-                        <motion.div
-                          className="absolute inset-0 bg-white/20"
-                          initial={{ x: "-100%" }}
-                          whileHover={{ x: "100%" }}
-                          transition={{ duration: 0.5 }}
-                        />
-                        <span className="relative z-10 flex items-center">
-                          Learn More
                           <motion.div
-                            animate={{ x: [0, 5, 0] }}
-                            transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
-                          >
-                            <ArrowRight className="ml-2 h-4 w-4" />
-                          </motion.div>
-                        </span>
+                            className="absolute inset-0 bg-white/20"
+                            initial={{ x: "-100%" }}
+                            whileHover={{ x: "100%" }}
+                            transition={{ duration: 0.5 }}
+                          />
+                          <span className="relative z-10 flex items-center">
+                            View More
+                            <motion.div
+                              animate={{ x: [0, 5, 0] }}
+                              transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
+                            >
+                              <ArrowRight className="ml-2 h-4 w-4" />
+                            </motion.div>
+                          </span>
                       </Button>
                     </motion.div>
                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
@@ -407,10 +438,8 @@ export function ProductPackages() {
                 </div>
               )}
               <DialogFooter>
-                <Button asChild className="w-full" onClick={() => setModalOpen(false)}>
-                  <a href={selectedPlan.paymentLink} target="_blank" rel="noopener noreferrer">
-                    Proceed to Payment
-                  </a>
+                <Button className="w-full" onClick={() => selectedPlan && startCheckout((selectedPlan as any).id)}>
+                  Proceed to Payment
                 </Button>
               </DialogFooter>
             </>

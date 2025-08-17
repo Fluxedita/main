@@ -27,8 +27,8 @@ const cardVariants = {
 const introHighlights = [
   {
     icon: Github,
-    title: "GitHub Setup",
-    description: "Guide for initializing a local repo and uploading to GitHub.",
+    title: "Optional Remote Setup",
+    description: "Initialize locally; optionally connect a remote (e.g., GitHub).",
     color: "from-gray-700 to-black",
   },
   {
@@ -40,14 +40,14 @@ const introHighlights = [
   {
     icon: UploadCloud,
     title: "Push & Update",
-    description: "Push to main branch and update your repository.",
+    description: "Push to main and keep your remote up to date (if used).",
     color: "from-blue-500 to-green-500",
   },
 ]
 
 const fullContent = (
   <>
-    <h3 className="text-2xl font-bold text-gray-900 mb-3">GitHub Initialization Upload Guide</h3>
+    <h3 className="text-2xl font-bold text-gray-900 mb-3">Initialize Local Repo and (Optional) Connect Remote</h3>
     <div className="prose max-w-none">
       <ol className="list-decimal pl-6">
         <li>
@@ -69,12 +69,12 @@ const fullContent = (
           <pre className="bg-gray-100 rounded p-4 overflow-x-auto text-sm mb-4"><code>{`git commit -m "Initial commit"`}</code></pre>
         </li>
         <li>
-          <strong>Create a New GitHub Repository</strong>
-          <p>Go to GitHub and create a new repository. <strong>Do not initialize it with a README or .gitignore</strong>, these are included in your Fluxedita Package (amend as required locally).</p>
+          <strong>(Optional) Create a Remote Repository</strong>
+          <p>Create an empty repository on your preferred platform (e.g., GitHub). <strong>Do not initialize it with a README or .gitignore</strong>; these are included in your Fluxedita package (amend locally as needed).</p>
         </li>
         <li>
-          <strong>Link Your Local Repo to GitHub</strong>
-          <p>Replace USERNAME and REPO with your GitHub username and repo name:</p>
+          <strong>(Optional) Link Your Local Repo to the Remote</strong>
+          <p>Replace USERNAME and REPO with your remote details (example shows GitHub):</p>
           <pre className="bg-gray-100 rounded p-4 overflow-x-auto text-sm mb-4"><code>{`git remote add origin https://github.com/YOUR_USERNAME/REPO.git`}</code></pre>
         </li>
         <li>
@@ -83,7 +83,8 @@ const fullContent = (
           <pre className="bg-gray-100 rounded p-4 overflow-x-auto text-sm mb-4"><code>{`git init
 git add .
 git commit -m "Initial commit"
-git remote add origin https://github.com/Fluxedita/custom_rootpage_package.git
+# Optional remote example (GitHub):
+git remote add origin https://github.com/YOUR_USERNAME/REPO.git
 git push -u origin main`}</code></pre>
         </li>
       </ol>
@@ -97,7 +98,7 @@ git push origin main`}</code></pre>
   </>
 )
 
-export function GitHubInitializationUploadGuideSection() {
+export function RepoInitializationOptionalRemoteGuideSection() {
   const ref = useRef(null)
   const [showFullContent, setShowFullContent] = useState(false)
 
@@ -110,9 +111,9 @@ export function GitHubInitializationUploadGuideSection() {
           initial="hidden"
           animate="visible"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">GitHub Initialization Upload Guide</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Initialize Local Repo and (Optional) Connect Remote</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Step-by-step guide for initializing a local repo and uploading to GitHub.
+            Step-by-step guide for initializing a local repo, with an optional step to connect and push to a remote (e.g., GitHub).
           </p>
         </motion.div>
         <AnimatePresence mode="wait">

@@ -11,7 +11,7 @@ import { CloudinarySetupGuideSection } from "@/components/documentation/cloudina
 import { SupabaseSetupGuideSection } from "@/components/documentation/supabase-setup-guide-section"
 import { ConfigureContactFormGmailSection } from "@/components/documentation/configure-contact-form-gmail-section"
 import { UploadsReadmeSection } from "@/components/documentation/uploads-readme-section"
-import { GitHubInitializationUploadGuideSection } from "@/components/documentation/github-initialization-upload-guide-section"
+import { RepoInitializationOptionalRemoteGuideSection } from "@/components/documentation/github-initialization-upload-guide-section"
 import { DisasterRecoveryPlanSection } from "@/components/documentation/disaster-recovery-plan-section"
 import { QuickLinks } from "@/components/ui/quick-links"
 
@@ -67,9 +67,9 @@ const SECTIONS = [
     excerpt: "Documentation for media upload workflows and gallery management.",
   },
   {
-    id: "github-initialization-upload-guide",
-    label: "GitHub Initialization Upload Guide",
-    excerpt: "How to initialize a local repo and upload to GitHub.",
+    id: "repo-initialization-optional-remote",
+    label: "Initialize Local Repo + Optional Remote",
+    excerpt: "Initialize a local repo and optionally connect/push to a remote (e.g., GitHub).",
   },
   {
     id: "disaster-recovery-plan",
@@ -96,7 +96,7 @@ export default function DocumentationPage() {
         <section id="supabase-setup-guide"><SupabaseSetupGuideSection /></section>
         <section id="configure-contact-form-gmail"><ConfigureContactFormGmailSection /></section>
         <section id="uploads-readme"><UploadsReadmeSection /></section>
-        <section id="github-initialization-upload-guide"><GitHubInitializationUploadGuideSection /></section>
+        <section id="repo-initialization-optional-remote"><RepoInitializationOptionalRemoteGuideSection /></section>
         <section id="disaster-recovery-plan"><DisasterRecoveryPlanSection /></section>
       </main>
       <Footer />

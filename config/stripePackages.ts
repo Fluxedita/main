@@ -3,7 +3,8 @@ export type PackageSlug = 'landing' | 'root' | 'multi' | 'premium' | 'agency' | 
 export function getPriceIdForSlug(slug: PackageSlug): string | null {
   switch (slug) {
     case 'landing':
-      return process.env.STRIPE_PRICE_LANDIMG || null // note: env var name as provided
+      // Prefer correct var, fall back to legacy misspelling if present
+      return process.env.STRIPE_PRICE_LANDING || process.env.STRIPE_PRICE_LANDIMG || null
     case 'root':
       return process.env.STRIPE_PRICE_ROOT || null
     case 'multi':
@@ -20,7 +21,8 @@ export function getPriceIdForSlug(slug: PackageSlug): string | null {
 }
 
 export function getModeForSlug(slug: PackageSlug): 'payment' | 'subscription' {
-  return slug === 'lifetime' ? 'payment' : 'subscription'
+  // All primary packages are now one-time purchases during launch period
+  return 'payment'
 }
 
 // Access mapping: premium, agency, lifetime all grant premium access

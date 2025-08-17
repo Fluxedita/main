@@ -11,7 +11,7 @@ const packages = [
   {
     id: "landing-page-package",
     name: "Landing Page Package",
-    price: 99,
+    price: 49,
     description: "Perfect for single-page sites and landing pages",
     features: [
       "1 Page",
@@ -28,7 +28,7 @@ const packages = [
   {
     id: "root-page-package",
     name: "Root Page Package",
-    price: 299,
+    price: 99,
     description: "Ideal for small business websites",
     features: [
       "3-5 Pages",
@@ -45,7 +45,7 @@ const packages = [
   {
     id: "multi-page-package",
     name: "Multi Page Package",
-    price: 599,
+    price: 199,
     description: "For growing businesses with more content",
     features: [
       "Up to 10 Pages",
@@ -62,7 +62,7 @@ const packages = [
   {
     id: "premium-page-package",
     name: "Premium Package",
-    price: 999,
+    price: 299,
     description: "For businesses that need custom solutions",
     features: [
       "Unlimited Pages",

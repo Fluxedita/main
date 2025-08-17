@@ -31,22 +31,22 @@ export default function RefundPolicy() {
 
         <section>
           <h2 className="text-2xl font-semibold text-gray-900 mb-4 flex items-center">
-            <span className="mr-2">📦</span> 1. Subscription Model
+            <span className="mr-2">📦</span> 1. Billing Model
           </h2>
           <p>
-            Fluxedita operates on a subscription basis, offering different pricing tiers with varying features. All payments are processed securely via Stripe.
+            Fluxedita core packages (Landing, Root, Multi, Premium, Agency) are <strong>one-time purchases</strong>. These include 12 months of app‑code updates that never overwrite your content or database.
           </p>
           <p className="mt-2">
-            You may choose monthly or annual billing, and all subscriptions auto-renew unless cancelled.
+            Optional <strong>Support packages</strong> (Standard or Premium) are <strong>recurring monthly subscriptions</strong> that auto‑renew unless cancelled. All payments are processed securely via Stripe.
           </p>
         </section>
 
         <section>
           <h2 className="text-2xl font-semibold text-gray-900 mb-4 flex items-center">
-            <span className="mr-2">🔁</span> 2. Cancellation Policy
+            <span className="mr-2">🔁</span> 2. Cancellation Policy (Support Subscriptions)
           </h2>
           <p className="mb-4">
-            You can cancel your subscription at any time by:
+            You can cancel your <strong>Support subscription</strong> at any time by:
           </p>
           <ol className="list-decimal pl-6 space-y-2 mb-4">
             <li>Logging into your account dashboard</li>
@@ -56,10 +56,10 @@ export default function RefundPolicy() {
           <p className="font-medium">Cancellations:</p>
           <ul className="list-disc pl-6 space-y-2 mb-4">
             <li>Take effect at the end of your current billing cycle</li>
-            <li>Do not result in a pro-rata refund for unused time (see Section 3)</li>
+            <li>Do not result in a pro‑rata refund for unused time (see Section 3)</li>
           </ul>
           <p>
-            Your account will remain active until the current paid period expires.
+            Your Support benefits remain active until the current paid period expires. One‑time package purchases are not affected by Support cancellation.
           </p>
         </section>
 
@@ -68,10 +68,10 @@ export default function RefundPolicy() {
             <span className="mr-2">💰</span> 3. Refund Policy
           </h2>
           <p className="mb-4">
-            As Fluxedita provides digital products and services that are delivered immediately upon subscription activation, we generally do not offer refunds for:
+            As Fluxedita provides digital products and services that are delivered immediately upon purchase or subscription activation, we generally do not offer refunds for:
           </p>
           <ul className="list-disc pl-6 space-y-2 mb-6">
-            <li>Partial subscription periods (e.g., mid-month cancellations)</li>
+            <li>Partial Support subscription periods (e.g., mid‑month cancellations)</li>
             <li>Non-use or limited use of the platform</li>
             <li>Dissatisfaction due to user error or lack of technical knowledge</li>
           </ul>

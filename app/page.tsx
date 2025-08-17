@@ -9,17 +9,18 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { RoiBanner } from "@/components/roi/roi-banner"
 import { RoiCalculator } from "@/components/ui/roi-calculator"
+import { ValueSavingsSection } from "@/components/value-savings-section"
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       <Header />
       <HeroSlider />
+      <Features />
+      <TechStack />
       <PromoVideo />
       <RoiBanner />
-      <Features />
-      <Packages />
-      <TechStack />
+      <ValueSavingsSection />
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="mb-6">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">Run the numbers</h2>

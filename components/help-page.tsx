@@ -171,7 +171,7 @@ export function HelpPage() {
       ],
       proTip: "Don’t dig through folders — search is faster!",
       relatedGuides: [
-        { text: "GitHub_Initialization_Upload_Guide.md", type: "link", link: "/documentation#github-initialization-upload-guide" },
+        { text: "Initialize Local Repo + Optional Remote", type: "link", link: "/documentation#repo-initialization-optional-remote" },
         { text: "EDITABLE_PAGES_AND_SECTIONS_GUIDE.md", type: "link", link: "/documentation#editable-pages" },
       ],
     },
@@ -208,12 +208,12 @@ export function HelpPage() {
       title: "Git push fails or authentication errors",
       symptoms: "`fatal: repository not found`, `Permission denied`, Push fails silently",
       fix: [
-        "Ensure your GitHub repo has no README or .gitignore if you're pushing an existing project",
+        "If using a remote (e.g., GitHub), ensure it has no README or .gitignore if you're pushing an existing project",
         "Run these commands (if starting over):",
-        '```bash\ngit init\ngit add .\ngit commit -m "First commit"\ngit branch -M main\ngit remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git\ngit push -u origin main\n```',
+        '```bash\ngit init\ngit add .\ngit commit -m "First commit"\ngit branch -M main\n# Optional remote example (GitHub)\ngit remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git\ngit push -u origin main\n```',
       ],
       proTip: "If Git keeps asking for a username/password, consider setting up SSH keys.",
-      relatedGuides: [{ text: "GitHub_Initialization_Upload_Guide.md", type: "link", link: "/documentation#github-initialization-upload-guide" }],
+      relatedGuides: [{ text: "Initialize Local Repo + Optional Remote", type: "link", link: "/documentation#repo-initialization-optional-remote" }],
     },
     {
       icon: Bot,
@@ -235,7 +235,7 @@ export function HelpPage() {
       title: "Vercel Deployment Fails Unexpectedly",
       symptoms: "App won’t deploy, White screen or generic 500 error on first visit",
       fix: [
-        "Confirm the GitHub repo is public or connected",
+        "If importing from GitHub, confirm the repo is accessible/connected; otherwise use Vercel CLI for local deploy",
         "Ensure all required .env variables are set correctly",
         "Verify that “Root Directory” in Vercel is empty unless your code is nested",
       ],
@@ -303,6 +303,72 @@ export function HelpPage() {
           <p className="text-lg text-gray-700 max-w-3xl mx-auto">
             We've got your back! If you can't find your answer here, check out our other support options below.
           </p>
+        </motion.div>
+
+        {/* Onboarding Services Section */}
+        <motion.div
+          className="mb-16"
+          variants={sectionVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
+          <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">
+            One-Time Setup & Customization — $1,000–$2,500
+          </h2>
+          <Card className="shadow-lg">
+            <CardContent className="p-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                <div className="md:col-span-2">
+                  <p className="text-lg text-gray-700 mb-4">
+                    Launch your Fluxedita site fully branded and ready to go. Perfect for teams who want a
+                    done-for-you start.
+                  </p>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-2 text-gray-700">
+                      <CheckCircle className="h-5 w-5 text-green-600 mt-0.5" />
+                      <span>Brand styling (colors, fonts, logos, layouts)</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-gray-700">
+                      <CheckCircle className="h-5 w-5 text-green-600 mt-0.5" />
+                      <span>Full onboarding & guided walkthrough</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-gray-700">
+                      <CheckCircle className="h-5 w-5 text-green-600 mt-0.5" />
+                      <span>Custom tweaks to match your workflow</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-gray-700">
+                      <CheckCircle className="h-5 w-5 text-green-600 mt-0.5" />
+                      <span>Content preload (sample or supplied)</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-gray-700">
+                      <CheckCircle className="h-5 w-5 text-green-600 mt-0.5" />
+                      <span>Integration setup (Cloudinary, Stripe, analytics, etc.)</span>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <div className="rounded-lg border border-gray-200 p-5 bg-gray-50">
+                    <div className="text-center">
+                      <p className="text-sm uppercase tracking-wide text-gray-500">One-Time Setup Fee</p>
+                      <p className="text-3xl font-extrabold text-gray-900 mt-1">$1,000–$2,500</p>
+                      <p className="text-sm text-gray-600 mt-2">Then $149–$199/mo ongoing</p>
+                    </div>
+                    <div className="mt-5 flex flex-col sm:flex-row gap-3">
+                      <Button className="flex-1" onClick={() => (window.location.href = "/contact")}>
+                        Request Onboarding
+                      </Button>
+                      <Button variant="outline" className="flex-1" onClick={() => (window.location.href = "/pricing")}>
+                        See Plans
+                      </Button>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-3">
+                      Works especially well for businesses that prefer a fully managed, guided start.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </motion.div>
 
         {/* Troubleshooting Sections */}

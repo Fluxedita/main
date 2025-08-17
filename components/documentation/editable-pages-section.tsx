@@ -137,7 +137,7 @@ const fullContent = (
     <ul className="list-disc list-inside ml-4 mt-2 text-lg text-gray-700 max-w-3xl mx-auto mb-8">
       <li>Check the main README.md and this guide.</li>
       <li>See supabase/SETUP_README.md for database setup.</li>
-      <li>Open an issue on GitHub for support.</li>
+      <li>Contact support at <a href="mailto:support@fluxedita.com" className="text-blue-600 hover:underline">support@fluxedita.com</a>.</li>
     </ul>
   </>
 )

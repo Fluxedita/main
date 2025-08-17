@@ -61,7 +61,7 @@ const introHighlights = [
   {
     icon: Cloud,
     title: "Essential Integrations",
-    description: "Seamlessly connect with free tiers of Gmail, GitHub, Supabase, Cloudinary, and Vercel.",
+    description: "Seamlessly connect with free tiers of Gmail, Supabase, Cloudinary, and Vercel (optionally GitHub as a remote).",
     color: "from-green-500 to-emerald-600",
   },
   {
@@ -136,10 +136,10 @@ const installationSteps = [
               </tr>
               <tr>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  <strong>GitHub</strong>
+                  <strong>GitHub (optional)</strong>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  For code storage and linking with Vercel
+                  Optional remote for code hosting and Vercel import
                 </td>
               </tr>
               <tr>
@@ -163,7 +163,7 @@ const installationSteps = [
                   <strong>Vercel</strong>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  For hosting your site and deploying from GitHub
+                  For hosting your site (import from GitHub optional; Vercel CLI/local deploy supported)
                 </td>
               </tr>
             </tbody>
@@ -187,7 +187,7 @@ const installationSteps = [
           <li>Open the folder in VS Code (or any code editor).</li>
         </ul>
         <p className="mt-4">
-          If you are <strong>cloning from GitHub</strong>:
+          If your project is <strong>hosted on GitHub</strong>:
         </p>
         <pre className="bg-gray-800 text-white p-4 rounded-md overflow-x-auto my-4">
           <code className="language-bash">
@@ -262,13 +262,13 @@ const installationSteps = [
   {
     id: "github-repo",
     icon: Github,
-    title: "4. Create a GitHub Repository",
+    title: "4. (Optional) Connect a Remote Repository (e.g., GitHub)",
     fullContent: (
       <>
         <ol className="list-decimal list-inside ml-4 mt-2">
-          <li>Go to GitHub and create a new empty repository (don’t add any files).</li>
+          <li>(Optional) Create a remote repository (e.g., on GitHub). Don’t add any files.</li>
           <li>
-            Link your local project folder to GitHub:
+            Link your local project folder to the remote:
             <pre className="bg-gray-800 text-white p-4 rounded-md overflow-x-auto my-4">
               <code className="language-bash">
                 {
@@ -368,9 +368,9 @@ const installationSteps = [
             >
               Vercel
             </a>{" "}
-            and log in with GitHub.
+            and log in.
           </li>
-          <li>Import your GitHub repository into Vercel.</li>
+          <li>Import your repository from GitHub (optional) or deploy from your local project using the Vercel CLI.</li>
           <li>
             When prompted, enter your `.env.local` values (Supabase, Cloudinary, Gmail, etc.) in the Vercel environment
             variables section.
@@ -535,18 +535,8 @@ const installationSteps = [
             for email setup.
           </li>
           <li>
-            Open an issue on{" "}
-            <a
-              href="https://github.com/jamescroanin/fluxedita/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:underline"
-            >
-              GitHub
-            </a>{" "}
-            if you get stuck.
+            Contact support at <a href="mailto:support@fluxedita.com" className="text-blue-600 hover:underline">support@fluxedita.com</a> if you get stuck.
           </li>
-          <li>Contact the development team at support@your-domain.com (if available).</li>
           <li>
             (Optional) Join our Discord community, watch setup tutorials on our YouTube Channel, or check for an
             installation video if available.
@@ -562,13 +552,13 @@ const installationSteps = [
     fullContent: (
       <>
         <ul className="list-disc list-inside ml-4 mt-2">
-          <li>Create free accounts on Gmail, GitHub, Supabase, Cloudinary, and Vercel.</li>
-          <li>Unzip and open your project in VS Code (or clone from GitHub).</li>
+          <li>Create free accounts on Gmail, Supabase, Cloudinary, and Vercel (GitHub optional as a remote).</li>
+          <li>Unzip and open your project in VS Code (or clone from your remote, e.g., GitHub).</li>
           <li>Set up your `.env.local` file with the required API keys.</li>
-          <li>Initialize Git and push to GitHub.</li>
+          <li>Initialize Git and optionally push to a remote (e.g., GitHub).</li>
           <li>Install Node.js and run `npm install`.</li>
           <li>Populate your Supabase project with the SQL scripts and create your admin user.</li>
-          <li>Deploy via Vercel, entering your environment variables during setup.</li>
+          <li>Deploy via Vercel (import from GitHub optional, local deploy supported), entering your environment variables during setup.</li>
           <li>Log in and start editing your website.</li>
           <li>Set up Gmail SMTP for the contact form (or another provider).</li>
         </ul>

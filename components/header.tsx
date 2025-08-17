@@ -69,9 +69,6 @@ export function Header() {
             <Link href="/pricing" className="text-gray-700 hover:text-blue-600 transition-colors">
               Pricing
             </Link>
-            <Link href="/documentation" className="inline-flex items-center text-gray-700 hover:text-blue-600 transition-colors">
-              <BookOpen className="mr-1.5 h-4 w-4" /> Docs
-            </Link>
             <Link href="/learning" className="inline-flex items-center text-gray-700 hover:text-blue-600 transition-colors">
               <GraduationCap className="mr-1.5 h-4 w-4" /> Learn
             </Link>

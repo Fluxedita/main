@@ -139,7 +139,7 @@ const fullContent = (
         <li><a href="https://supabase.com/docs/guides/auth/auth-helpers/nextjs" target="_blank" rel="noopener noreferrer">Supabase Auth Helpers for Next.js</a></li>
       </ul>
       <h4 id="support">Support</h4>
-      <p>For additional help, refer to the official <a href="https://supabase.com/docs" target="_blank" rel="noopener noreferrer">Supabase Documentation</a> or <a href="https://github.com/supabase/supabase/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a>.</p>
+      <p>For additional help, refer to the official <a href="https://supabase.com/docs" target="_blank" rel="noopener noreferrer">Supabase Documentation</a> or contact us at <a href="mailto:support@fluxedita.com" className="text-blue-600 hover:underline">support@fluxedita.com</a>.</p>
     </div>
   </>
 )

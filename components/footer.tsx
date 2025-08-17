@@ -1,4 +1,4 @@
-import { Github, Twitter, Linkedin, Mail } from "lucide-react"
+import { Twitter, Linkedin, Mail } from "lucide-react"
 import Link from "next/link" // Import Link for internal navigation
 
 export function Footer() {
@@ -15,9 +15,6 @@ export function Footer() {
               client handover/editability, and safe app‑code updates.
             </p>
             <div className="flex space-x-4">
-              <a href="#" aria-label="FluxEdita on GitHub" className="text-gray-400 hover:text-white transition-colors">
-                <Github className="h-6 w-6" />
-              </a>
               <a href="#" aria-label="FluxEdita on Twitter" className="text-gray-400 hover:text-white transition-colors">
                 <Twitter className="h-6 w-6" />
               </a>

@@ -8,7 +8,8 @@ export function RoiBanner() {
         <div className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-blue-200/40 blur-3xl" />
         <div className="relative z-10 grid items-center gap-6 md:grid-cols-2">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-800">
+            <div className="inline-fleor $1,999/yr
+x items-center gap-2 rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-800">
               📈 ROI Calculator
             </div>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -43,7 +44,6 @@ export function RoiBanner() {
               <div>
                 <div className="text-xs font-medium text-gray-500">Premium (Early Adopter)</div>
                 <div className="text-2xl font-bold text-gray-900">$199/mo</div>
-                <div className="text-xs text-gray-500">or $1,999/yr</div>
               </div>
             </div>
           </div>

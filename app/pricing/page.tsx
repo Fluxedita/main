@@ -36,7 +36,6 @@ export default async function PricingPage({
       <RoiBanner />
       <PricingPlans />
       <FeatureComparison />
-      <PricingCTA />
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="mb-6">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">Run the numbers</h2>
@@ -44,6 +43,7 @@ export default async function PricingPage({
         </div>
         <RoiCalculator />
       </section>
+      <PricingCTA />
       <Footer />
     </div>
   )

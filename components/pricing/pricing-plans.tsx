@@ -22,8 +22,8 @@ export const plans = [
     id: "landing-page-package",
     name: "Landing Page Package",
     subtitle: "Launch your online presence with a single, stunning landing page design.",
-    price: "£39.99",
-    period: "per month",
+    price: "£49",
+    period: "one-time payment",
     icon: Zap,
     color: "from-gray-400 to-gray-600",
     badge: "💡 Quick Launch",
@@ -93,8 +93,8 @@ export const plans = [
     id: "root-page-package",
     name: "Root Page Package",
     subtitle: "Grow your business with essential features and integrations.",
-    price: "£69.99",
-    period: "per month",
+    price: "£99",
+    period: "one-time payment",
     icon: Users,
     color: "from-blue-500 to-blue-600",
     badge: "🏆 Best Value",
@@ -167,8 +167,8 @@ export const plans = [
     id: "multi-page-package",
     name: "Multi Page Package",
     subtitle: "Scale your operations with advanced management and customization.",
-    price: "£99",
-    period: "per month",
+    price: "£199",
+    period: "one-time payment",
     icon: Building,
     color: "from-purple-500 to-purple-600",
     badge: "🚀 Scale Ready",
@@ -244,8 +244,8 @@ export const plans = [
     id: "premium-page-package",
     name: "Fluxedita Premium (Early Adopter)",
     subtitle: "All features, hosting, updates, and priority support—launch in days, not months.",
-    price: "$199/mo",
-    period: "or $1,999/yr",
+    price: "£299",
+    period: "one-time payment",
     icon: Crown,
     color: "from-orange-500 to-red-600",
     badge: "🎉 Founders Price",
@@ -328,8 +328,8 @@ export const plans = [
     id: "agency-saas",
     name: "Agency / Enterprise",
     subtitle: "For multiple sites, higher limits, custom domains, and SLA options.",
-    price: "$399/mo",
-    period: "or $3,999/yr",
+    price: "£399",
+    period: "one-time payment",
     icon: Building,
     color: "from-sky-600 to-indigo-700",
     badge: "🏢 Scale & Support",
@@ -426,7 +426,7 @@ const priceVariants = {
 export function PricingPlans() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
-  const [allExpanded, setAllExpanded] = useState(false)
+  // Features preview is limited per card; full details shown in modal via Show More
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null)
   const [modalOpen, setModalOpen] = useState(false)
   const { toast } = useToast()
@@ -448,6 +448,44 @@ export function PricingPlans() {
       default:
         return 'landing'
     }
+  }
+
+  // Optional Support checkout (subscription) — cannot be combined in one session with one-time package
+  async function startSupportCheckout(tier: 'standard' | 'premium') {
+    try {
+      const res = await fetch('/api/stripe/create-support-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ tier }),
+      })
+      if (res.status === 401) {
+        try {
+          toast({
+            title: 'Please sign in to subscribe to support',
+            description: 'Create your account, then you can complete the support subscription.',
+            duration: 3500,
+          })
+        } catch {}
+        const current = typeof window !== 'undefined' ? window.location.pathname : '/pricing'
+        const nextUrl = `/signin?next=${encodeURIComponent(current)}`
+        setTimeout(() => {
+          window.location.href = nextUrl
+        }, 3500)
+        return
+      }
+      const data = await res.json()
+      if (res.ok && data?.url) {
+        window.open(data.url as string, '_blank')
+      } else {
+        console.error('Support checkout error', data)
+        alert(data?.error || 'Unable to start support checkout')
+      }
+    } catch (err: any) {
+      console.error(err)
+      alert('Unexpected error creating support checkout session')
+    }
+  }
 
   // Direct slug checkout (used for resume flow via ?checkout=slug)
   async function startCheckoutBySlug(slug: 'landing' | 'root' | 'multi' | 'premium' | 'agency' | 'lifetime') {
@@ -486,6 +524,38 @@ export function PricingPlans() {
     }
   }
 
+  // Start package checkout and request post-success support deeplink
+  async function startCheckoutWithSupport(planId: string, tier: 'standard' | 'premium') {
+    try {
+      const slug = mapPlanIdToSlug(planId)
+      const res = await fetch('/api/stripe/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ slug, supportTier: tier }),
+      })
+      if (res.status === 401) {
+        try {
+          toast({ title: 'Please sign in to continue', description: 'Create your account first.' })
+        } catch {}
+        const current = typeof window !== 'undefined' ? window.location.origin + '/pricing' : '/pricing'
+        const nextUrl = `/signin?next=${encodeURIComponent(`${current}?checkout=${slug}`)}`
+        setTimeout(() => { window.location.href = nextUrl }, 1200)
+        return
+      }
+      const data = await res.json()
+      if (res.ok && data?.url) {
+        window.location.href = data.url as string
+      } else {
+        console.error('Checkout error', data)
+        alert(data?.error || 'Unable to start checkout')
+      }
+    } catch (err: any) {
+      console.error(err)
+      alert('Unexpected error creating checkout session')
+    }
+  }
+
   // Auto-resume checkout after sign-in if ?checkout=<slug> is present
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -497,7 +567,6 @@ export function PricingPlans() {
       return () => clearTimeout(t)
     }
   }, [])
-  }
 
   async function startCheckout(planId: string) {
     try {
@@ -541,17 +610,17 @@ export function PricingPlans() {
     <section className="py-20 bg-white" ref={ref}>
       <div className="w-full px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32">
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full h-full max-w-7xl mx-auto"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full h-full max-w-7xl mx-auto"
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
           {plans.map((plan, index) => {
-            const featuresToShow = !allExpanded ? plan.included.slice(0, 3) : plan.included;
+            const featuresToShow = plan.included.slice(0, 3);
             return (
               <motion.div key={plan.id} variants={cardVariants} className="min-w-0 w-full flex h-full">
                 <Card
-                  className={`w-full mx-auto flex-1 flex flex-col h-full relative overflow-hidden group cursor-pointer transition-all duration-300 ${
+                  className={`w-full mx-auto flex-1 flex flex-col h-full aspect-square rounded-xl relative overflow-hidden group cursor-pointer transition-all duration-300 ${
                     plan.popular
                       ? "border-2 border-blue-500 shadow-xl lg:scale-105"
                       : "border border-gray-200 hover:border-blue-300 hover:shadow-lg"
@@ -669,7 +738,20 @@ export function PricingPlans() {
                   <CardContent className="px-4 sm:px-6 pb-6 flex-1 flex flex-col">
                     <div className="space-y-6 flex-1 flex flex-col">
                       <div>
-                        <h4 className="font-semibold text-green-700 mb-3 text-sm">✅ Included Features:</h4>
+                        <div className="flex items-center justify-between mb-3">
+                          <h4 className="font-semibold text-green-700 text-sm">✅ Included Features:</h4>
+                          {plan.included.length > 3 && (
+                            <Button
+                              type="button"
+                              variant="outline"
+                              className="h-7 px-2 text-[11px] leading-none"
+                              onClick={() => { setSelectedPlan(plan); setModalOpen(true); }}
+                              aria-label={`Show more details for ${plan.name}`}
+                            >
+                              {`Show More (${plan.included.length - 3})`}
+                            </Button>
+                          )}
+                        </div>
                         <ul className="space-y-2">
                           {featuresToShow.map((feature, featureIndex) => (
                             <motion.li
@@ -686,124 +768,37 @@ export function PricingPlans() {
                             </motion.li>
                           ))}
                         </ul>
-                        {allExpanded && plan.includedExtras && (
-                          <div className="mt-5">
-                            <h5 className="font-semibold text-blue-700 mb-2 text-sm">📦 Platform Essentials:</h5>
-                            <ul className="space-y-2">
-                              {plan.includedExtras.map((extra, extraIndex) => (
-                                <motion.li
-                                  key={extraIndex}
-                                  className="flex items-start text-sm"
-                                  initial={{ opacity: 0, x: -20 }}
-                                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                                  transition={{ delay: index * 0.1 + extraIndex * 0.03 + 0.9 }}
-                                >
-                                  <Check className="h-4 w-4 text-blue-500 mr-2 mt-0.5 flex-shrink-0" />
-                                  <span className="text-gray-700">{extra}</span>
-                                </motion.li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
+                        
                       </div>
-                      {/* Only show the rest of the card if expanded */}
-                      {allExpanded && (
-                        <>
-                          {plan.premiumBenefits && (
-                            <motion.div
-                              initial={{ opacity: 0, scale: 0.9 }}
-                              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-                              transition={{ delay: index * 0.1 + 1 }}
-                            >
-                              <h4 className="font-semibold text-orange-700 mb-3 text-sm">🌟 Premium Benefits:</h4>
-                              <ul className="space-y-2">
-                                {plan.premiumBenefits.map((benefit, benefitIndex) => (
-                                  <motion.li
-                                    key={benefitIndex}
-                                    className="flex items-start text-sm"
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                                    transition={{ delay: index * 0.1 + benefitIndex * 0.03 + 1.2 }}
-                                  >
-                                    <motion.div
-                                      animate={{ rotate: [0, 360] }}
-                                      transition={{
-                                        duration: 3,
-                                        repeat: Number.POSITIVE_INFINITY,
-                                        delay: benefitIndex * 0.2,
-                                      }}
-                                    >
-                                      <Check className="h-4 w-4 text-orange-500 mr-2 mt-0.5 flex-shrink-0" />
-                                    </motion.div>
-                                    <span className="text-gray-700">{benefit}</span>
-                                  </motion.li>
-                                ))}
-                              </ul>
-                            </motion.div>
-                          )}
-                          {plan.notIncluded && (
-                            <div>
-                              <h4 className="font-semibold text-red-700 mb-3 text-sm">❌ Not Included:</h4>
-                              <ul className="space-y-2">
-                                {plan.notIncluded.map((feature, featureIndex) => (
-                                  <motion.li
-                                    key={featureIndex}
-                                    className="flex items-start text-sm"
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                                    transition={{ delay: index * 0.1 + featureIndex * 0.03 + 1.5 }}
-                                  >
-                                    <X className="h-4 w-4 text-red-500 mr-2 mt-0.5 flex-shrink-0" />
-                                    <span className="text-gray-500">{feature}</span>
-                                  </motion.li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
+                      <motion.div
+                        className="mt-auto"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                        transition={{ delay: index * 0.1 + 1.0 }}
+                      >
+                        <Button
+                          className={`w-full py-4 text-base relative overflow-hidden group ${
+                            plan.popular
+                              ? "bg-blue-600 hover:bg-blue-700"
+                              : plan.premium
+                                ? `bg-gradient-to-r ${plan.color} hover:opacity-90`
+                                : ""
+                          }`}
+                          variant={plan.popular || plan.premium ? "default" : "outline"}
+                          disabled={(plan as any).lifetimeSlotsLeft !== undefined && (plan as any).lifetimeSlotsLeft === 0}
+                          onClick={() => startCheckout((plan as any).id)}
+                        >
                           <motion.div
-                            className="mt-auto"
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                            transition={{ delay: index * 0.1 + 1.8 }}
-                          >
-                            <Button
-                              className={`w-full py-4 text-base relative overflow-hidden group ${
-                                plan.popular
-                                  ? "bg-blue-600 hover:bg-blue-700"
-                                  : plan.premium
-                                    ? `bg-gradient-to-r ${plan.color} hover:opacity-90`
-                                    : ""
-                              }`}
-                              variant={plan.popular || plan.premium ? "default" : "outline"}
-                              disabled={(plan as any).lifetimeSlotsLeft !== undefined && (plan as any).lifetimeSlotsLeft === 0}
-                              onClick={() => {
-                                setSelectedPlan(plan)
-                                setModalOpen(true)
-                              }}
-                            >
-                              <motion.div
-                                className="absolute inset-0 bg-white/20"
-                                initial={{ x: "-100%" }}
-                                whileHover={{ x: "100%" }}
-                                transition={{ duration: 0.5 }}
-                              />
-                              <span className="relative z-10 px-4 py-2">{(plan as any).lifetimeSlotsLeft !== undefined && (plan as any).lifetimeSlotsLeft === 0 ? 'Sold Out' : 'Get Started'}</span>
-                            </Button>
-                          </motion.div>
-                        </>
-                      )}
-                      {plan.included.length > 3 && (
-                        <div className="mt-4 flex justify-center">
-                          <button
-                            className="text-blue-600 hover:underline text-sm font-medium focus:outline-none"
-                            onClick={() => setAllExpanded((prev) => !prev)}
-                          >
-                            {allExpanded ? "Show Less" : `Show More (${plan.included.length - 3} more)`}
-                          </button>
-                        </div>
-                      )}
+                            className="absolute inset-0 bg-white/20"
+                            initial={{ x: "-100%" }}
+                            whileHover={{ x: "100%" }}
+                            transition={{ duration: 0.5 }}
+                          />
+                          <span className="relative z-10 px-4 py-2">{(plan as any).lifetimeSlotsLeft !== undefined && (plan as any).lifetimeSlotsLeft === 0 ? 'Sold Out' : 'Get Started'}</span>
+                        </Button>
+                      </motion.div>
                     </div>
                   </CardContent>
                 </Card>
@@ -854,6 +849,7 @@ export function PricingPlans() {
                     Proceed to Payment
                   </Button>
                 </DialogFooter>
+                
               </>
             )}
           </DialogContent>

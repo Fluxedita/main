@@ -1,12 +1,40 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Zap, Code, Palette, Unlink, Shield, Users, Star } from "lucide-react"
 import Link from "next/link" // For linking to other pages
 
 const slides = [
+  // Slide 0: New First Slide (User-provided)
+  {
+    id: 4,
+    type: "hero",
+    title: (
+      <>
+        <span className="text-gray-900">Imagine if you could create a full-stack community platform</span>
+        <br />
+        <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          — complete with memberships, media, and interactivity — in hours, not months.
+        </span>
+      </>
+    ),
+    description:
+      "Fluxedita makes it possible: live messaging, dynamic media sets, premium content, and powerful admin tools — all fully guided, all in one platform.",
+    badge: {
+      icon: Zap,
+      text: "Fully Guided • All‑in‑One",
+    },
+    ctaButtons: [
+      { text: "Get Started Today — Fully Guided From Day One", link: "/pricing", variant: "default" },
+    ],
+    techIcons: [
+      { icon: Code, text: "Next.js & React" },
+      { icon: Palette, text: "Tailwind CSS" },
+      { icon: Zap, text: "Framer Motion" },
+    ],
+  },
   // Slide 1: Original Hero Content
   {
     id: 1,
@@ -125,19 +153,218 @@ export function HeroSlider() {
   const [[page, direction], setPage] = useState([0, 0])
   const slideIndex = ((page % slides.length) + slides.length) % slides.length
   const currentSlide = slides[slideIndex]
+  const videoRef = useRef<HTMLVideoElement | null>(null)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const [videoPlaying, setVideoPlaying] = useState(false)
+  const [rememberPlay, setRememberPlay] = useState(false)
+
+  // Per-word stagger variants for the first slide headline
+  const wordContainer = {
+    hidden: {},
+    visible: {
+      transition: { delayChildren: 0.5, staggerChildren: 0.15 }, // Headline starts at 0.5s, 0.15s per word
+    },
+  }
+  const wordItem = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  }
 
   const paginate = (newDirection: number) => {
     setPage([page + newDirection, newDirection])
   }
 
+  // Load persisted preference
+  useEffect(() => {
+    try {
+      const v = localStorage.getItem('heroVideoPlayPreferred')
+      if (v === '1') setRememberPlay(true)
+    } catch {}
+  }, [])
+
+  // Manual video controls
+  const startVideo = async () => {
+    try {
+      const isCoarse = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(pointer: coarse)").matches
+      if (videoRef.current) {
+        if (isCoarse) {
+          // Mobile: keep video muted, play separate audio track
+          videoRef.current.muted = true
+          await videoRef.current.play()
+          if (audioRef.current) {
+            audioRef.current.currentTime = 0
+            await audioRef.current.play()
+          }
+        } else {
+          // Desktop: unmute video audio and play
+          videoRef.current.muted = false
+          await videoRef.current.play()
+        }
+        setVideoPlaying(true)
+        // Persist preference to auto-play when slide returns
+        try {
+          localStorage.setItem('heroVideoPlayPreferred', '1')
+        } catch {}
+        setRememberPlay(true)
+      }
+    } catch {}
+  }
+  const pauseVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.pause()
+      setVideoPlaying(false)
+    }
+    if (audioRef.current) {
+      audioRef.current.pause()
+    }
+    // Persist preference as not auto-play
+    try {
+      localStorage.setItem('heroVideoPlayPreferred', '0')
+    } catch {}
+    setRememberPlay(false)
+  }
+
+  // Ensure media behavior on slide changes:
+  // - If user prefers play, auto-play with audio when slide 0 appears.
+  // - Otherwise, briefly play then pause to show a motion frame.
+  useEffect(() => {
+    let pauseTimer: ReturnType<typeof setTimeout> | null = null
+    if (slideIndex === 0) {
+      if (videoRef.current) {
+        const isCoarse = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(pointer: coarse)").matches
+        if (rememberPlay) {
+          // Auto-play with audio according to device
+          try {
+            videoRef.current.currentTime = 0
+            if (isCoarse) {
+              videoRef.current.muted = true
+              const vp = videoRef.current.play()
+              if (vp && typeof vp.then === 'function') {
+                vp.then(() => {
+                  if (audioRef.current) {
+                    audioRef.current.currentTime = 0
+                    const ap = audioRef.current.play()
+                    if (ap && typeof ap.then === 'function') {
+                      ap.catch(() => {})
+                    }
+                  }
+                  setVideoPlaying(true)
+                }).catch(() => {
+                  videoRef.current?.pause()
+                  setVideoPlaying(false)
+                })
+              } else {
+                // Non-promise play fallback
+                if (audioRef.current) {
+                  audioRef.current.currentTime = 0
+                  const ap = audioRef.current.play()
+                  if (ap && typeof ap.then === 'function') {
+                    ap.catch(() => {})
+                  }
+                }
+                setVideoPlaying(!videoRef.current.paused)
+              }
+            } else {
+              videoRef.current.muted = false
+              const vp = videoRef.current.play()
+              if (vp && typeof vp.then === 'function') {
+                vp.then(() => setVideoPlaying(true)).catch(() => {
+                  videoRef.current?.pause()
+                  setVideoPlaying(false)
+                })
+              } else {
+                setVideoPlaying(!videoRef.current.paused)
+              }
+            }
+          } catch {
+            videoRef.current.pause()
+            setVideoPlaying(false)
+          }
+        } else {
+          // Play muted briefly, then pause to show a motion frame
+          try {
+            videoRef.current.muted = true
+            videoRef.current.currentTime = 0
+            const p: any = videoRef.current.play()
+            if (p && typeof p.then === 'function') {
+              p.then(() => {
+                setVideoPlaying(true)
+                pauseTimer = setTimeout(() => {
+                  if (videoRef.current) {
+                    videoRef.current.pause()
+                    setVideoPlaying(false)
+                  }
+                }, 250)
+              }).catch(() => {
+                videoRef.current?.pause()
+                setVideoPlaying(false)
+              })
+            } else {
+              setVideoPlaying(!videoRef.current.paused)
+              pauseTimer = setTimeout(() => {
+                if (videoRef.current) {
+                  videoRef.current.pause()
+                  setVideoPlaying(false)
+                }
+              }, 250)
+            }
+          } catch {
+            videoRef.current.pause()
+            setVideoPlaying(false)
+          }
+        }
+      }
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current.currentTime = 0
+      }
+    } else {
+      // Leaving first slide: stop any media
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current.currentTime = 0
+      }
+      if (videoRef.current) {
+        videoRef.current.pause()
+        videoRef.current.currentTime = 0
+        videoRef.current.muted = true
+      }
+      setVideoPlaying(false)
+    }
+    return () => {
+      if (pauseTimer) clearTimeout(pauseTimer)
+    }
+  }, [slideIndex])
+
+  // Advance to next slide when media ends on first slide
+  useEffect(() => {
+    if (slideIndex !== 0) return
+
+    const handleEnded = () => {
+      // Only advance if we are still on the first slide
+      paginate(1)
+    }
+
+    const v = videoRef.current
+    const a = audioRef.current
+    v?.addEventListener("ended", handleEnded)
+    a?.addEventListener("ended", handleEnded)
+
+    return () => {
+      v?.removeEventListener("ended", handleEnded)
+      a?.removeEventListener("ended", handleEnded)
+    }
+  }, [slideIndex])
+
   // Auto-play functionality
   useEffect(() => {
+    const intervalMs = slideIndex === 0 ? 18000 : 14000 // First slide reduced by 16s as requested
     const interval = setInterval(() => {
       paginate(1)
-    }, 14000) // Change slide every 14 seconds (doubled duration)
+    }, intervalMs)
 
     return () => clearInterval(interval)
-  }, [page]) // Re-run effect when page changes to reset interval
+  }, [page, slideIndex]) // Reset when slide changes
 
   return (
     <section className="pt-24 pb-16 bg-gradient-to-br from-blue-50 via-white to-purple-50 overflow-hidden relative min-h-[700px] flex items-center justify-center">
@@ -152,7 +379,33 @@ export function HeroSlider() {
             exit="exit"
             className="absolute inset-0 flex items-center justify-center text-center p-4"
           >
-            <div className="max-w-4xl mx-auto">
+            {currentSlide.id === 4 && (
+              <>
+                <video
+                  ref={videoRef}
+                  className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+                  src="/videos/heroslider_intro/heroslider_intro.mp4"
+                  poster="/videos/heroslider_intro/poster.jpg"
+                  muted
+                  playsInline
+                  onPlay={() => setVideoPlaying(true)}
+                  onPause={() => setVideoPlaying(false)}
+                />
+                {/* Hidden audio element for mobile soundtrack */}
+                <audio ref={audioRef} src="/videos/heroslider_intro/heroslider_intro.mp3" preload="auto" />
+                {/* Video Play/Pause control */}
+                <div className="absolute right-4 top-4 z-20 flex gap-2">
+                  <button
+                    onClick={videoPlaying ? pauseVideo : startVideo}
+                    className="rounded-full bg-white/70 hover:bg-white text-gray-900 px-3 py-1.5 text-xs shadow"
+                    aria-pressed={videoPlaying}
+                  >
+                    {videoPlaying ? "Pause video" : "Play video"}
+                  </button>
+                </div>
+              </>
+            )}
+            <div className="relative z-10 max-w-4xl mx-auto">
               {currentSlide.type === "hero" && (
                 <motion.div
                   className="text-center"
@@ -178,15 +431,74 @@ export function HeroSlider() {
                     </motion.div>
                   )}
 
-                  <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">{currentSlide.title}</h1>
+                  {currentSlide.id === 4 ? (
+                    <div className="mb-6">
+                      <motion.h1
+                        className="text-4xl md:text-6xl font-bold text-gray-900"
+                        variants={wordContainer}
+                        initial="hidden"
+                        animate="visible"
+                      >
+                        {"Imagine if you could create a full-stack community platform".split(" ").map((word, idx) => (
+                          <motion.span
+                            key={idx}
+                            variants={wordItem}
+                            className="inline-block mr-2"
+                          >
+                            {word}
+                          </motion.span>
+                        ))}
+                      </motion.h1>
+                      <h2 className="mt-3 text-2xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                        {"— complete with memberships, media, and interactivity — in hours, not months.".split(" ").map((word, idx) => (
+                          <motion.span
+                            key={idx}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 3.0 + idx * 0.15 }}
+                            className="inline-block mr-2"
+                          >
+                            {word}
+                          </motion.span>
+                        ))}
+                      </h2>
+                    </div>
+                  ) : (
+                    <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">{currentSlide.title}</h1>
+                  )}
 
-                  <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-                    {currentSlide.description}
-                  </p>
+                  {currentSlide.id === 4 ? (
+                    <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+                      {String(currentSlide.description)
+                        .split(" ")
+                        .map((word, idx) => (
+                          <motion.span
+                            key={idx}
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.45, delay: 6.8 + idx * 0.12 }}
+                            className="inline-block mr-2"
+                          >
+                            {word}
+                          </motion.span>
+                        ))}
+                    </p>
+                  ) : (
+                    <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+                      {currentSlide.description}
+                    </p>
+                  )}
 
                   <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
                     {currentSlide.ctaButtons?.map((button, idx) => (
-                      <motion.div key={idx} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                      <motion.div
+                        key={idx}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        initial={currentSlide.id === 4 ? { opacity: 0, y: 10 } : undefined}
+                        animate={currentSlide.id === 4 ? { opacity: 1, y: 0 } : undefined}
+                        transition={currentSlide.id === 4 ? { duration: 0.5, delay: 10.6 } : undefined}
+                      >
                         <Button
                           size="lg"
                           className={`text-lg px-8 py-3 relative overflow-hidden group ${
@@ -205,7 +517,25 @@ export function HeroSlider() {
                               />
                             )}
                             <span className="relative z-10 flex items-center">
-                              {button.text}
+                              {currentSlide.id === 4 ? (
+                                <>
+                                  {String(button.text)
+                                    .split(" ")
+                                    .map((word, i) => (
+                                      <motion.span
+                                        key={i}
+                                        initial={{ opacity: 0, y: 8 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.4, delay: 10.8 + i * 0.1 }}
+                                        className="inline-block mr-1"
+                                      >
+                                        {word}
+                                      </motion.span>
+                                    ))}
+                                </>
+                              ) : (
+                                button.text
+                              )}
                               <motion.div animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
                                 <ArrowRight className="ml-2 h-5 w-5" />
                               </motion.div>

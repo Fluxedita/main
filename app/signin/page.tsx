@@ -7,7 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from "@/components/ui/separator"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { Github, Mail, Lock, Eye, EyeOff } from "lucide-react"
+import { Mail, Lock, Eye, EyeOff } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser"
@@ -165,14 +165,6 @@ export default function SignInPage() {
               </div>
 
               <div className="mt-6 grid grid-cols-1 gap-3">
-                <Button
-                  variant="outline"
-                  className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-                  onClick={() => window.location.href = '/unauthorized'}
-                >
-                  <Github className="h-5 w-5 mr-2" />
-                  Sign in with GitHub
-                </Button>
                 <Button
                   variant="outline"
                   className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"

@@ -128,8 +128,8 @@ export function InstallationGuide() {
                 <div className="flex items-start space-x-4">
                   <Github className="h-6 w-6 text-gray-800 flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-gray-900">GitHub</h3>
-                    <p className="text-gray-700 text-sm">For code storage and linking with Vercel</p>
+                    <h3 className="font-semibold text-gray-900">GitHub (optional)</h3>
+                    <p className="text-gray-700 text-sm">Optional remote for code hosting and Vercel import</p>
                     <a
                       href="https://github.com/join"
                       target="_blank"
@@ -178,7 +178,7 @@ export function InstallationGuide() {
                   />
                   <div>
                     <h3 className="font-semibold text-gray-900">Vercel</h3>
-                    <p className="text-gray-700 text-sm">For hosting your site and deploying from GitHub</p>
+                    <p className="text-gray-700 text-sm">For hosting your site (import from GitHub optional; Vercel CLI/local deploy supported)</p>
                     <a
                       href="https://vercel.com/signup"
                       target="_blank"
@@ -345,11 +345,11 @@ export function InstallationGuide() {
             <div className="flex-1">
               <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center">
                 <Github className="h-7 w-7 text-blue-600 mr-3" />
-                Step 4: Create a GitHub Repository
+                Step 4 (Optional): Connect a Remote Repository (e.g., GitHub)
               </h2>
               <p className="text-lg text-gray-700 mb-4">
-                Go to GitHub and create a new empty repository (don’t add any files). Link your local project folder to
-                GitHub:
+                (Optional) Create a new empty repository on your preferred remote (e.g., GitHub). Then link your local
+                project folder to the remote:
               </p>
               <pre className="bg-gray-800 text-white p-4 rounded-md overflow-x-auto mb-4">
                 <code className="language-bash">
@@ -408,9 +408,9 @@ export function InstallationGuide() {
                 Step 6: Deploy to Vercel
               </h2>
               <p className="text-lg text-gray-700 mb-4">
-                Go to Vercel and log in with GitHub. Import your GitHub repository into Vercel. When prompted, enter
-                your `.env` values (Supabase, Cloudinary, etc.) in the Vercel environment variables section. Click
-                Deploy.
+                Go to Vercel and log in. Import your repository from GitHub (optional) or deploy from your local project
+                using the Vercel CLI. When prompted, enter your `.env` values (Supabase, Cloudinary, etc.) in the Vercel
+                environment variables section. Click Deploy.
               </p>
               <p className="text-lg text-gray-700">
                 Within a couple of minutes, your site will be live at:{" "}
@@ -507,12 +507,12 @@ export function InstallationGuide() {
               <CardContent className="p-6">
                 <ul className="space-y-3">
                   {[
-                    "Create free accounts on Gmail, GitHub, Supabase, Cloudinary, and Vercel.",
+                    "Create free accounts on Gmail, Supabase, Cloudinary, and Vercel (GitHub optional as a remote).",
                     "Unzip and open your project in VS Code.",
                     "Set up your .env file with the required API keys.",
-                    "Initialize Git and push to GitHub.",
+                    "Initialize Git and optionally push to a remote (e.g., GitHub).",
                     "Populate your Supabase project with the SQL scripts and create your admin user.",
-                    "Deploy via Vercel, entering your environment variables during setup.",
+                    "Deploy via Vercel (import from GitHub optional, local deploy supported).",
                     "Log in and start editing your website.",
                   ].map((item, index) => (
                     <motion.li
