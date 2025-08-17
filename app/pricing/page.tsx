@@ -33,7 +33,6 @@ export default async function PricingPage({
         </div>
       )}
       <PricingHero />
-      <RoiBanner />
       <PricingPlans />
       <FeatureComparison />
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
@@ -44,6 +43,7 @@ export default async function PricingPage({
         <RoiCalculator />
       </section>
       <PricingCTA />
+      <RoiBanner />
       <Footer />
     </div>
   )

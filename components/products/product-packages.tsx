@@ -407,6 +407,9 @@ export function ProductPackages() {
                   <DollarSign className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
                   <div>
                     <h4 className="font-semibold text-blue-800 mb-1">{plan.valueProposition.title}</h4>
+                    {(plan as any).valueProposition?.tagline && (
+                      <p className="text-blue-800 text-sm font-medium mb-1">{(plan as any).valueProposition.tagline}</p>
+                    )}
                     <p
                       className="text-blue-700 text-sm"
                       dangerouslySetInnerHTML={{ __html: plan.valueProposition.text }}

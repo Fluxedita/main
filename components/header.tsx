@@ -8,7 +8,9 @@ import { ChevronDown } from "lucide-react"
 import Link from "next/link"
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser"
 
-export function Header() {
+type HeaderProps = { showPromo?: boolean }
+
+export function Header({ showPromo = true }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isAuthed, setIsAuthed] = useState<boolean>(false)
 
@@ -35,15 +37,17 @@ export function Header() {
     <>
     <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm border-b border-gray-200 z-50">
       {/* Key value top bar */}
-      <div className="hidden md:block bg-gradient-to-r from-blue-50 via-white to-purple-50 border-b border-gray-200/60">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center gap-3 py-1.5 text-xs">
-            <span className="inline-flex items-center rounded-full bg-blue-100 text-blue-800 px-2.5 py-1 font-medium">Guided</span>
-            <span className="inline-flex items-center rounded-full bg-green-100 text-green-800 px-2.5 py-1 font-medium">Client Handover</span>
-            <span className="inline-flex items-center rounded-full bg-purple-100 text-purple-800 px-2.5 py-1 font-medium">Reusable License</span>
+      {showPromo && (
+        <div className="hidden md:block bg-gradient-to-r from-blue-50 via-white to-purple-50 border-b border-gray-200/60">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-center gap-3 py-1.5 text-xs">
+              <span className="inline-flex items-center rounded-full bg-blue-100 text-blue-800 px-2.5 py-1 font-medium">Guided</span>
+              <span className="inline-flex items-center rounded-full bg-green-100 text-green-800 px-2.5 py-1 font-medium">Client Handover</span>
+              <span className="inline-flex items-center rounded-full bg-purple-100 text-purple-800 px-2.5 py-1 font-medium">Reusable License</span>
+            </div>
           </div>
         </div>
-      </div>
+      )}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
@@ -118,6 +122,11 @@ export function Header() {
                 <DropdownMenuItem>
                   <Link href="/help" className="text-gray-700 hover:text-blue-600 transition-colors">
                     Help
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/support" className="text-gray-700 hover:text-blue-600 transition-colors">
+                    Support
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>

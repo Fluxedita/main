@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useToast } from "@/components/ui/use-toast"
 
 type Profile = {
@@ -28,13 +28,25 @@ type Props = {
 
 export default function AccountTabs({ user, profile }: Props) {
   const router = useRouter()
+  const pathname = usePathname()
   const { toast } = useToast()
   const [tab, setTab] = useState<"overview" | "downloads" | "billing" | "settings">("overview")
+  const [unread, setUnread] = useState<number>(0)
   const [saving, setSaving] = useState(false)
   const [status, setStatus] = useState<string | null>(null)
   const [showSupportPrompt, setShowSupportPrompt] = useState(false)
   const [support, setSupport] = useState<{ loading: boolean; active: boolean; tier: null | 'standard' | 'premium' }>({ loading: false, active: false, tier: null })
   const [showOverviewSupportBanner, setShowOverviewSupportBanner] = useState(false)
+  const [showTicket, setShowTicket] = useState(false)
+  const [ticketSubmitting, setTicketSubmitting] = useState(false)
+  const [ticket, setTicket] = useState<{ subject: string; category: string; message: string }>({ subject: "", category: "General", message: "" })
+
+  const [quotas, setQuotas] = useState<{
+    loading: boolean
+    tier: null | 'standard' | 'premium'
+    free: { limit: number; used: number; remaining: number }
+    basic: { limit: number; used: number; nextResetAt: string | null }
+  }>({ loading: false, tier: null, free: { limit: 0, used: 0, remaining: 0 }, basic: { limit: 5, used: 0, nextResetAt: null } })
 
   const [form, setForm] = useState({
     full_name: profile?.full_name ?? "",
@@ -165,6 +177,48 @@ export default function AccountTabs({ user, profile }: Props) {
     return () => { aborted = true }
   }, [tab])
 
+  // Fetch unread messages count for Messages tab
+  useEffect(() => {
+    let cancelled = false
+    const load = async () => {
+      try {
+        const res = await fetch('/api/account/messages/unread-count', { credentials: 'include' })
+        const data = await res.json().catch(() => ({}))
+        if (!cancelled && res.ok) setUnread(Number(data.count || 0))
+      } catch {}
+    }
+    load()
+    const t = setInterval(load, 30_000)
+    return () => { cancelled = true; clearInterval(t) }
+  }, [])
+
+  // Fetch quotas when viewing Billing or Overview
+  useEffect(() => {
+    if (tab !== 'billing' && tab !== 'overview') return
+    let aborted = false
+    const run = async () => {
+      setQuotas((q) => ({ ...q, loading: true }))
+      try {
+        const res = await fetch('/api/support/quotas', { credentials: 'include' })
+        const data = await res.json().catch(() => ({}))
+        if (!aborted && res.ok) {
+          setQuotas({
+            loading: false,
+            tier: (data.tier === 'standard' || data.tier === 'premium') ? data.tier : null,
+            free: data.free || { limit: 0, used: 0, remaining: 0 },
+            basic: data.basic || { limit: 5, used: 0, nextResetAt: null },
+          })
+        } else if (!aborted) {
+          setQuotas((q) => ({ ...q, loading: false }))
+        }
+      } catch {
+        if (!aborted) setQuotas((q) => ({ ...q, loading: false }))
+      }
+    }
+    run()
+    return () => { aborted = true }
+  }, [tab])
+
   return (
     <div>
       {showSupportPrompt && (
@@ -212,6 +266,17 @@ export default function AccountTabs({ user, profile }: Props) {
             {label}
           </button>
         ))}
+        <button
+          onClick={() => router.push('/account/messages')}
+          className={`px-3 py-2 -mb-px border-b-2 ${pathname?.startsWith('/account/messages') ? "border-black font-semibold" : "border-transparent text-gray-500"} relative`}
+        >
+          Messages
+          {unread > 0 && (
+            <span className="ml-2 inline-flex items-center justify-center text-[10px] leading-none px-1.5 py-0.5 rounded-full bg-red-600 text-white">
+              {unread}
+            </span>
+          )}
+        </button>
       </div>
 
       {tab === "overview" && (
@@ -256,6 +321,20 @@ export default function AccountTabs({ user, profile }: Props) {
               <div className="w-12 h-12 rounded-full border bg-gray-100" />
             )}
           </div>
+          <div className="flex items-center gap-3 flex-wrap">
+            <button
+              onClick={() => { setShowTicket(true); track('support_ticket_open', { source: 'overview' }) }}
+              className="rounded bg-white border px-3 py-2 text-sm hover:bg-gray-50"
+            >
+              Submit Support Ticket
+            </button>
+            {!quotas.loading && (
+              <div className="text-xs text-gray-600 flex items-center gap-3">
+                <span>Weekly (Basic): {quotas.basic.used}/{quotas.basic.limit}{quotas.basic.nextResetAt ? ` • resets ${new Date(quotas.basic.nextResetAt).toLocaleDateString()}` : ''}</span>
+                <span>Free included: {quotas.free.used}/{quotas.free.limit} used • {Math.max(0, quotas.free.remaining)} left</span>
+              </div>
+            )}
+          </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="rounded-lg border p-4 bg-white">
               <div className="text-sm text-gray-500 mb-1">Full name</div>
@@ -291,6 +370,170 @@ export default function AccountTabs({ user, profile }: Props) {
               Manage Billing
             </button>
           </div>
+          {/* Support Ticket Modal */}
+          {showTicket && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center">
+              <div className="absolute inset-0 bg-black/50" onClick={() => setShowTicket(false)} />
+              <div className="relative z-10 w-full max-w-lg rounded-lg bg-white shadow-lg border">
+                <div className="px-4 py-3 border-b flex items-center justify-between">
+                  <h3 className="font-semibold">New Support Ticket</h3>
+                  <button className="text-sm text-gray-600 hover:underline" onClick={() => setShowTicket(false)}>Close</button>
+                </div>
+                <form
+                  className="p-4 grid gap-3"
+                  onSubmit={async (e) => {
+                    e.preventDefault()
+                    if (!ticket.subject || !ticket.message) {
+                      toast({ title: 'Please fill subject and message' })
+                      return
+                    }
+                    // Client-side quota guard
+                    const noFreeLeft = !support.active && !quotas.loading && quotas.free.remaining <= 0
+                    const noBasicLeft = (support.tier === 'standard') && !quotas.loading && quotas.basic.used >= quotas.basic.limit && quotas.free.remaining <= 0
+                    const exhausted = noFreeLeft || noBasicLeft
+                    const promptUpgradeOrContact = (kind: 'free' | 'basic') => {
+                      const title = kind === 'basic' ? 'Standard Support allowance used' : 'Free support credits used'
+                      const description = kind === 'basic'
+                        ? 'You have used your weekly Standard Support allowance. You can upgrade your Support plan or contact us via the contact form.'
+                        : 'You have used your free support credits. You can purchase a Support plan or contact us via the contact form.'
+                      toast({ title, description })
+                      setTimeout(() => {
+                        const choice = window.confirm('OK: View Support plans. Cancel: Go to Contact page.')
+                        if (choice) {
+                          // Let users choose tier on Support page
+                          window.location.href = '/support'
+                        } else {
+                          window.location.href = '/contact'
+                        }
+                      }, 50)
+                    }
+                    if (exhausted) {
+                      promptUpgradeOrContact(noBasicLeft ? 'basic' : 'free')
+                      return
+                    }
+                    setTicketSubmitting(true)
+                    try {
+                      const res = await fetch('/api/support/ticket', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                        body: JSON.stringify(ticket),
+                      })
+                      const data = await res.json().catch(() => ({}))
+                      if (res.status === 403) {
+                        // Exhausted on server-side; show upgrade/contact
+                        const code = (data && (data.code === 'free_exhausted' || data.code === 'basic_exhausted')) ? data.code : undefined
+                        toast({ title: 'Support credits unavailable', description: data?.error || 'You have used your available support credits.' })
+                        if (code === 'basic_exhausted') {
+                          setTimeout(() => { const c = window.confirm('OK: View Support plans. Cancel: Go to Contact page.'); window.location.href = c ? '/support' : '/contact' }, 50)
+                        } else {
+                          setTimeout(() => { const c = window.confirm('OK: View Support plans. Cancel: Go to Contact page.'); window.location.href = c ? '/support' : '/contact' }, 50)
+                        }
+                        return
+                      }
+                      if (!res.ok) throw new Error(data?.error || 'Failed to submit ticket')
+                      track('support_ticket_submitted', { category: ticket.category })
+                      toast({ title: 'Ticket submitted', description: 'We\'ll get back to you via email.' })
+                      setShowTicket(false)
+                      setTicket({ subject: '', category: 'General', message: '' })
+                      // Refresh quotas after successful submission
+                      try {
+                        const qr = await fetch('/api/support/quotas', { credentials: 'include' })
+                        const qd = await qr.json().catch(() => ({}))
+                        if (qr.ok) {
+                          setQuotas({
+                            loading: false,
+                            tier: (qd.tier === 'standard' || qd.tier === 'premium') ? qd.tier : null,
+                            free: qd.free || { limit: 0, used: 0, remaining: 0 },
+                            basic: qd.basic || { limit: 5, used: 0, nextResetAt: null },
+                          })
+                        }
+                      } catch {}
+                    } catch (e: any) {
+                      toast({ title: 'Ticket error', description: e?.message || String(e) })
+                    } finally {
+                      setTicketSubmitting(false)
+                    }
+                  }}
+                >
+                  {(!quotas.loading) && (
+                    (() => {
+                      const noFreeLeft = !support.active && quotas.free.remaining <= 0
+                      const noBasicLeft = (support.tier === 'standard') && quotas.basic.used >= quotas.basic.limit && quotas.free.remaining <= 0
+                      if (noFreeLeft || noBasicLeft) {
+                        return (
+                          <div className="rounded border border-amber-300 bg-amber-50 p-2 text-xs text-amber-900">
+                            {noBasicLeft ? (
+                              <>
+                                You have used your weekly Standard Support allowance. Consider upgrading your Support plan or use our contact form.
+                              </>
+                            ) : (
+                              <>
+                                You have used your free support credits. Consider purchasing a Support plan or use our contact form.
+                              </>
+                            )}
+                            <div className="mt-2 flex gap-2">
+                              <a className="underline" href="/support">View Support plans</a>
+                              <a className="underline" href="/contact">Contact</a>
+                            </div>
+                          </div>
+                        )
+                      }
+                      return null
+                    })()
+                  )}
+                  <div className="grid gap-1">
+                    <label className="text-sm">Subject</label>
+                    <input
+                      className="border rounded px-2 py-1"
+                      value={ticket.subject}
+                      onChange={(e) => setTicket({ ...ticket, subject: e.target.value })}
+                      maxLength={200}
+                      placeholder="Brief summary"
+                    />
+                  </div>
+                  <div className="grid gap-1">
+                    <label className="text-sm">Category</label>
+                    <select
+                      className="border rounded px-2 py-1"
+                      value={ticket.category}
+                      onChange={(e) => setTicket({ ...ticket, category: e.target.value })}
+                    >
+                      <option>General</option>
+                      <option>Billing</option>
+                      <option>Installation</option>
+                      <option>Bug</option>
+                      <option>Feature Request</option>
+                    </select>
+                  </div>
+                  <div className="grid gap-1">
+                    <label className="text-sm">Message</label>
+                    <textarea
+                      className="border rounded px-2 py-1 min-h-32"
+                      value={ticket.message}
+                      onChange={(e) => setTicket({ ...ticket, message: e.target.value })}
+                      maxLength={10000}
+                      placeholder="Describe your issue or request."
+                    />
+                  </div>
+                  <div className="flex items-center justify-end gap-3 pt-2">
+                    <button type="button" className="px-3 py-2 text-sm" onClick={() => setShowTicket(false)}>Cancel</button>
+                    {(() => {
+                      const noFreeLeft = !support.active && !quotas.loading && quotas.free.remaining <= 0
+                      const noBasicLeft = (support.tier === 'standard') && !quotas.loading && quotas.basic.used >= quotas.basic.limit && quotas.free.remaining <= 0
+                      const disabled = ticketSubmitting || noFreeLeft || noBasicLeft
+                      return (
+                        <button type="submit" className={`rounded px-3 py-2 text-sm ${disabled ? 'bg-gray-300 text-gray-600' : 'bg-black text-white'}`} disabled={disabled}>
+                          {disabled ? 'No credits available' : (ticketSubmitting ? 'Submitting…' : 'Submit Ticket')}
+                        </button>
+                      )
+                    })()}
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">From: {user.email || '—'} • ID: {user.id}</p>
+                </form>
+              </div>
+            </div>
+          )}
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="rounded-lg border p-4 bg-white">
               <div className="text-sm text-gray-500 mb-1">Company</div>
@@ -331,22 +574,36 @@ export default function AccountTabs({ user, profile }: Props) {
             <p className="text-sm text-gray-700 mb-4">
               Manage your subscription, payment methods, and invoices.
             </p>
-            <button
-              onClick={async () => {
-                try {
-                  const res = await fetch("/api/stripe/portal", { method: "POST", credentials: "include" })
-                  const data = await res.json().catch(() => ({} as any))
-                  if (!res.ok || !data?.url) throw new Error(data?.error || "Unable to open billing portal")
-                  window.location.href = data.url as string
-                } catch (e: any) {
-                  console.error("Billing portal error:", e)
-                  toast({ title: "Billing portal error", description: e?.message || String(e) })
-                }
-              }}
-              className="bg-black text-white rounded px-3 py-2"
-            >
-              Manage Billing
-            </button>
+            <div className="flex flex-wrap gap-3">
+              <button
+                onClick={async () => {
+                  try {
+                    const res = await fetch("/api/stripe/portal", { method: "POST", credentials: "include" })
+                    const data = await res.json().catch(() => ({} as any))
+                    if (!res.ok || !data?.url) throw new Error(data?.error || "Unable to open billing portal")
+                    window.location.href = data.url as string
+                  } catch (e: any) {
+                    console.error("Billing portal error:", e)
+                    toast({ title: "Billing portal error", description: e?.message || String(e) })
+                  }
+                }}
+                className="bg-black text-white rounded px-3 py-2"
+              >
+                Manage Billing
+              </button>
+              <button
+                onClick={() => { setShowTicket(true); track('support_ticket_open', { source: 'billing' }) }}
+                className="rounded bg-white border px-3 py-2 text-sm hover:bg-gray-50"
+              >
+                Submit Support Ticket
+              </button>
+              {!quotas.loading && (
+                <div className="text-xs text-gray-600 flex items-center gap-3">
+                  <span>Weekly (Basic): {quotas.basic.used}/{quotas.basic.limit}{quotas.basic.nextResetAt ? ` • resets ${new Date(quotas.basic.nextResetAt).toLocaleDateString()}` : ''}</span>
+                  <span>Free included: {quotas.free.used}/{quotas.free.limit} used • {Math.max(0, quotas.free.remaining)} left</span>
+                </div>
+              )}
+            </div>
           </div>
           {/* Support status and upsell */}
           <div className="rounded-lg border p-4 bg-white">
@@ -378,6 +635,23 @@ export default function AccountTabs({ user, profile }: Props) {
                 </button>
               </div>
             )}
+          </div>
+          {/* Ticket quotas in Billing */}
+          <div className="rounded-lg border p-4 bg-white">
+            <div className="flex items-center gap-3 flex-wrap">
+              <button
+                onClick={() => { setShowTicket(true); track('support_ticket_open', { source: 'billing' }) }}
+                className="rounded bg-white border px-3 py-2 text-sm hover:bg-gray-50"
+              >
+                Submit Support Ticket
+              </button>
+              {!quotas.loading && (
+                <div className="text-xs text-gray-600 flex items-center gap-3">
+                  <span>Weekly (Basic): {quotas.basic.used}/{quotas.basic.limit}{quotas.basic.nextResetAt ? ` • resets ${new Date(quotas.basic.nextResetAt).toLocaleDateString()}` : ''}</span>
+                  <span>Free included: {quotas.free.used}/{quotas.free.limit} used • {Math.max(0, quotas.free.remaining)} left</span>
+                </div>
+              )}
+            </div>
           </div>
         </section>
       )}
