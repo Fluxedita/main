@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import type Stripe from 'stripe'
 import { getSupabaseServerClient } from "@/lib/supabase/server"
 import { getStripe } from "@/lib/stripe/server"
 import { getPriceIdForSlug, getModeForSlug, type PackageSlug } from "@/config/stripePackages"
@@ -34,6 +35,32 @@ export async function POST(req: NextRequest) {
     const supportParam = supportTier ? `support=${supportTier}` : 'support=prompt'
     const successUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/account?purchase=success&${supportParam}`
     const cancelUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/pricing?canceled=1`
+
+    // Validate price type to avoid mode/price mismatch
+    let priceObj: Stripe.Price | null = null
+    try {
+      // Lazy import type to avoid runtime dependency; get actual object via stripe
+      // @ts-ignore - type provided by stripe package at runtime
+      priceObj = await stripe.prices.retrieve(price)
+    } catch (e) {
+      // If retrieval fails, continue and let Stripe surface the error on session.create
+    }
+
+    if (mode === 'payment' && priceObj && priceObj.type === 'recurring') {
+      return NextResponse.json(
+        {
+          error:
+            'Configured package price is a recurring price but checkout mode is payment. Please update env to use a one-time price ID for this package.',
+          details: {
+            package_slug: slug,
+            configured_price: price,
+            price_type: priceObj.type,
+            recurring: priceObj.recurring || null,
+          },
+        },
+        { status: 400 }
+      )
+    }
 
     const session = await stripe.checkout.sessions.create(
       {
