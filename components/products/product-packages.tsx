@@ -57,8 +57,28 @@ export function ProductPackages() {
   const [lightboxOpen, setLightboxOpen] = useState<string | null>(null)
   const { toast } = useToast()
 
-  async function startCheckout(slug: string) {
+  function mapPlanIdToSlug(planId: string): 'landing' | 'root' | 'multi' | 'premium' | 'agency' | 'lifetime' {
+    switch (planId) {
+      case 'landing-page-package':
+        return 'landing'
+      case 'root-page-package':
+        return 'root'
+      case 'multi-page-package':
+        return 'multi'
+      case 'premium-page-package':
+        return 'premium'
+      case 'agency-saas':
+        return 'agency'
+      case 'lifetime-early':
+        return 'lifetime'
+      default:
+        return 'landing'
+    }
+  }
+
+  async function startCheckout(planId: string) {
     try {
+      const slug = mapPlanIdToSlug(planId)
       const res = await fetch('/api/stripe/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
