@@ -44,7 +44,14 @@ export default function SignUpPage() {
 
     try {
       const supabase = getSupabaseBrowserClient()
-      const { data, error } = await supabase.auth.signUp({ email, password })
+      const origin = window.location.origin
+      const nextQuery = nextPath ? `?next=${encodeURIComponent(nextPath)}` : ""
+      const emailRedirectTo = `${origin}/auth/callback${nextQuery}`
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { emailRedirectTo },
+      })
       if (error) {
         setError(error.message)
         setIsLoading(false)
