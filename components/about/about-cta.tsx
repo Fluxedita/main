@@ -49,7 +49,7 @@ export function AboutCTA() {
                       </DialogHeader>
                       <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
                         <iframe
-                          src="https://www.youtube.com/embed/pi3Nk0-_NsU"
+                          src="https://www.youtube.com/embed/h7NSqtp8n-0"
                           title="Fluxedita Installation Guide"
                           frameBorder="0"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

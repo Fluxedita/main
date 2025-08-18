@@ -25,7 +25,7 @@ export function PromoVideo() {
             
             <>
               <img
-                src={`https://img.youtube.com/vi/pi3Nk0-_NsU/maxresdefault.jpg`}
+                src={`https://img.youtube.com/vi/A7EKEwLvKXA/maxresdefault.jpg`}
                 alt="Fluxedita Demo Video"
                 className="w-full h-full object-cover opacity-70 hover:opacity-100 transition-opacity duration-300"
               />
@@ -52,7 +52,7 @@ export function PromoVideo() {
           </DialogHeader>
           <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
             <iframe
-              src="https://www.youtube.com/embed/pi3Nk0-_NsU?autoplay=1&rel=0&modestbranding=1"
+              src="https://www.youtube.com/embed/A7EKEwLvKXA?autoplay=1&rel=0&modestbranding=1"
               title="Fluxedita Demo Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -16,7 +16,7 @@ export default function TutorialsPage() {
       tagline: 'Get started with Fluxedita in minutes',
       description: 'Follow along as we guide you through the installation process, from downloading the template to running it locally on your machine. Perfect for beginners!',
       icon: <Download className="w-6 h-6 text-blue-600" />,
-      videoId: 'pi3Nk0-_NsU', // YouTube video ID
+      videoId: 'A7EKEwLvKXA', // YouTube video ID (Full)
     },
     {
       id: 'editing',
@@ -33,7 +33,7 @@ export default function TutorialsPage() {
       tagline: 'Get started with Fluxedita in minutes',
       description: 'Follow along with the shortened version of the installation process, edited to show just the essentials. If you are already familiar with the process, this is the perfect video for you!',
       icon: <Download className="w-6 h-6 text-blue-600" />,
-      videoId: 'pi3Nk0-_NsU', // YouTube video ID
+      videoId: 'h7NSqtp8n-0', // YouTube video ID (Short)
     },
     {
       id: 'advanced_editing',
