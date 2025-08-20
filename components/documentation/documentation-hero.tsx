@@ -71,6 +71,9 @@ export function DocumentationHero() {
             Start to mastery — guided at every step. Learn how to edit live in the browser, hand over to clients safely,
             reuse your packages across projects, and apply app‑code updates without ever overwriting your content or database.
           </motion.p>
+          <motion.p className="text-base text-gray-600 max-w-3xl mx-auto" variants={itemVariants}>
+            You can deploy, manage, and host Fluxedita using any remote services that support Next.js. Pick the providers that fit your workflow.
+          </motion.p>
         </motion.div>
       </div>
     </section>

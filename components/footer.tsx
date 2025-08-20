@@ -14,6 +14,9 @@ export function Footer() {
               The all-in-one, fully guided full‑stack platform. Build and ship faster with reusable packages, seamless
               client handover/editability, and safe app‑code updates.
             </p>
+            <p className="text-gray-400 text-sm mb-6 max-w-md">
+              You can deploy, manage, and host Fluxedita using any remote services that support Next.js. Pick the providers that fit your workflow.
+            </p>
             <div className="flex space-x-4">
               <a href="#" aria-label="FluxEdita on Twitter" className="text-gray-400 hover:text-white transition-colors">
                 <Twitter className="h-6 w-6" />

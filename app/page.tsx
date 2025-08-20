@@ -19,6 +19,12 @@ export default function Home() {
       <Features />
       <TechStack />
       <PromoVideo />
+      {/* Hosting-agnostic tagline banner */}
+      <section className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
+        <div className="rounded-md border border-gray-200 bg-gradient-to-r from-blue-50 via-white to-purple-50 p-4 text-gray-700 text-sm">
+          You can deploy, manage, and host <span className="font-semibold">Fluxedita</span> using any remote services that support Next.js. Pick the providers that fit your workflow.
+        </div>
+      </section>
       <RoiBanner />
       <ValueSavingsSection />
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">

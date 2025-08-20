@@ -70,6 +70,9 @@ export function AboutHero() {
             Our mission is to remove the friction between your creative vision and your website. We're building the
             future where anyone can create, manage, and scale beautiful websites without compromise.
           </motion.p>
+          <motion.p className="text-base text-gray-600 max-w-3xl mx-auto" variants={itemVariants}>
+            You can deploy, manage, and host Fluxedita using any remote services that support Next.js. Pick the providers that fit your workflow.
+          </motion.p>
         </motion.div>
       </div>
     </section>
