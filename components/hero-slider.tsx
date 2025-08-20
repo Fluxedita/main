@@ -385,9 +385,10 @@ export function HeroSlider() {
                   ref={videoRef}
                   className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
                   src="/videos/heroslider_intro/heroslider_intro.mp4"
-                  poster="/videos/heroslider_intro/poster.jpg"
+                  poster="/placeholder.jpg"
                   muted
                   playsInline
+                  preload="none"
                   onPlay={() => setVideoPlaying(true)}
                   onPause={() => setVideoPlaying(false)}
                 />

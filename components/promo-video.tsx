@@ -28,6 +28,10 @@ export function PromoVideo() {
                 src={`https://img.youtube.com/vi/A7EKEwLvKXA/maxresdefault.jpg`}
                 alt="Fluxedita Demo Video"
                 className="w-full h-full object-cover opacity-70 hover:opacity-100 transition-opacity duration-300"
+                loading="lazy"
+                decoding="async"
+                width={1280}
+                height={720}
               />
               {/* Play button overlay */}
               <button 

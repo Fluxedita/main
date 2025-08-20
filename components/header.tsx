@@ -59,6 +59,9 @@ export function Header({ showPromo = true }: HeaderProps) {
                 src="/favicon.ico" 
                 alt="FluxEdita Logo" 
                 className="h-8 w-8"
+                width={32}
+                height={32}
+                decoding="async"
               />
               <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 FluxEdita

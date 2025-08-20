@@ -72,30 +72,30 @@ export function RoiCalculator() {
         <h3 className="text-lg font-semibold mb-4">Inputs</h3>
         <div className="grid gap-4">
           <div>
-            <label className={labelClass}>Monthly visitors</label>
-            <input type="number" min={0} className={inputClass} value={inputs.monthlyVisitors} onChange={handle("monthlyVisitors")} />
+            <label className={labelClass} htmlFor="rc-monthlyVisitors">Monthly visitors</label>
+            <input id="rc-monthlyVisitors" type="number" min={0} className={inputClass} value={inputs.monthlyVisitors} onChange={handle("monthlyVisitors")} />
           </div>
           <div>
-            <label className={labelClass}>Premium conversion (%)</label>
-            <input type="number" min={0} max={100} step={0.1} className={inputClass} value={inputs.premiumConversion} onChange={handle("premiumConversion")} />
+            <label className={labelClass} htmlFor="rc-premiumConversion">Premium conversion (%)</label>
+            <input id="rc-premiumConversion" type="number" min={0} max={100} step={0.1} className={inputClass} value={inputs.premiumConversion} onChange={handle("premiumConversion")} />
           </div>
           <div>
-            <label className={labelClass}>ARPU ($/month)</label>
-            <input type="number" min={0} step={1} className={inputClass} value={inputs.arpu} onChange={handle("arpu")} />
+            <label className={labelClass} htmlFor="rc-arpu">ARPU ($/month)</label>
+            <input id="rc-arpu" type="number" min={0} step={1} className={inputClass} value={inputs.arpu} onChange={handle("arpu")} />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className={labelClass}>Team hourly rate ($/hr)</label>
-              <input type="number" min={0} step={5} className={inputClass} value={inputs.teamHourlyRate} onChange={handle("teamHourlyRate")} />
+              <label className={labelClass} htmlFor="rc-teamHourlyRate">Team hourly rate ($/hr)</label>
+              <input id="rc-teamHourlyRate" type="number" min={0} step={5} className={inputClass} value={inputs.teamHourlyRate} onChange={handle("teamHourlyRate")} />
             </div>
             <div>
-              <label className={labelClass}>Team size (devs)</label>
-              <input type="number" min={0} step={1} className={inputClass} value={inputs.teamSize} onChange={handle("teamSize")} />
+              <label className={labelClass} htmlFor="rc-teamSize">Team size (devs)</label>
+              <input id="rc-teamSize" type="number" min={0} step={1} className={inputClass} value={inputs.teamSize} onChange={handle("teamSize")} />
             </div>
           </div>
           <div>
-            <label className={labelClass}>Months to build from scratch</label>
-            <input type="number" min={0} step={0.5} className={inputClass} value={inputs.monthsToBuild} onChange={handle("monthsToBuild")} />
+            <label className={labelClass} htmlFor="rc-monthsToBuild">Months to build from scratch</label>
+            <input id="rc-monthsToBuild" type="number" min={0} step={0.5} className={inputClass} value={inputs.monthsToBuild} onChange={handle("monthsToBuild")} />
             <p className="mt-2 text-xs text-gray-500">Typical range for a comparable custom build: 6–9 months (est. $121k–$243k total).</p>
           </div>
         </div>
