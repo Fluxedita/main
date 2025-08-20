@@ -239,6 +239,9 @@ export function Packages() {
                   </Button>
                 </a>
               </motion.div>
+              <p className="mt-3 text-xs text-gray-500 text-center">
+                One-time license. Support optional (monthly).
+              </p>
             </motion.div>
           ))}
         </motion.div>

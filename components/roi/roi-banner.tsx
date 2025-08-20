@@ -8,8 +8,7 @@ export function RoiBanner() {
         <div className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-blue-200/40 blur-3xl" />
         <div className="relative z-10 grid items-center gap-6 md:grid-cols-2">
           <div>
-            <div className="inline-fleor $1,999/yr
-x items-center gap-2 rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-800">
+            <div className="inline-flex items-center gap-2 rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-800">
               📈 ROI Calculator
             </div>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -18,6 +17,9 @@ x items-center gap-2 rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold 
             <p className="mt-2 max-w-prose text-gray-600">
               Estimate monthly revenue impact, custom build costs avoided, and time-to-launch advantage. Validate build vs. buy
               with real numbers tailored to your traffic and conversion assumptions.
+            </p>
+            <p className="mt-2 text-xs text-gray-500 max-w-prose">
+              Note: Build‑cost estimates shown in USD; package prices in GBP. “Monthly” here refers to revenue projections, not subscription pricing. Core packages are one‑time purchases; only Support is billed monthly.
             </p>
             <div className="mt-5 flex flex-wrap gap-3">
               <Link
@@ -43,7 +45,7 @@ x items-center gap-2 rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold 
               </div>
               <div>
                 <div className="text-xs font-medium text-gray-500">Premium (Early Adopter)</div>
-                <div className="text-2xl font-bold text-gray-900">$199/mo</div>
+                <div className="text-2xl font-bold text-gray-900">£299 one-time</div>
               </div>
             </div>
           </div>

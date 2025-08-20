@@ -21,6 +21,10 @@ export default function RoiPage() {
             cost you avoid, and your payback period.
           </p>
           <div className="mt-4 text-sm text-gray-500">Want the summary? <Link href="/pricing" className="text-indigo-600 hover:text-indigo-700 underline">See pricing</Link></div>
+          <div className="mt-3 text-xs text-gray-500 space-y-1">
+            <p>Note: Build‑cost estimates are shown in USD; package prices are shown in GBP.</p>
+            <p>“Monthly” references on this page describe revenue projections only. Core packages are one‑time purchases; only Support is billed monthly.</p>
+          </div>
         </section>
 
         <section className="mb-12">
@@ -36,14 +40,14 @@ export default function RoiPage() {
                 <div className="text-emerald-900/80">Estimated custom build cost</div>
               </div>
               <div className="md:border-l md:border-emerald-200 md:pl-6">
-                <div className="text-sm font-semibold text-emerald-800">Early Adopter</div>
-                <div className="mt-1 text-2xl font-bold text-emerald-900">$199/mo</div>
-                <div className="text-emerald-900/80">or $1,999/yr (2 months free)</div>
+                <div className="text-sm font-semibold text-emerald-800">Premium</div>
+                <div className="mt-1 text-2xl font-bold text-emerald-900">£299 one-time</div>
+                <div className="text-emerald-900/80">One-time license</div>
               </div>
               <div className="md:border-l md:border-emerald-200 md:pl-6">
                 <div className="text-sm font-semibold text-emerald-800">Agency/Enterprise</div>
-                <div className="mt-1 text-2xl font-bold text-emerald-900">$399/mo</div>
-                <div className="text-emerald-900/80">or $3,999/yr</div>
+                <div className="mt-1 text-2xl font-bold text-emerald-900">£399 one-time</div>
+                <div className="text-emerald-900/80">One-time license</div>
               </div>
             </div>
             <div className="mt-6 flex flex-wrap gap-3">

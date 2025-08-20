@@ -276,6 +276,9 @@ export function ProductPackages() {
                       </Button>
                     </motion.div>
                   </motion.div>
+                  <p className="mt-2 text-xs text-gray-500">
+                    One-time license. Support optional (monthly).
+                  </p>
                 </motion.div>
 
                 {/* Preview Side */}
@@ -430,7 +433,8 @@ export function ProductPackages() {
               <DialogHeader>
                 <DialogTitle className="text-2xl font-bold mb-2">{selectedPlan.name} Package</DialogTitle>
                 <div className="text-gray-600 mb-2">{selectedPlan.subtitle}</div>
-                <div className="text-3xl font-bold text-gray-900 mb-4">{selectedPlan.price}</div>
+                <div className="text-3xl font-bold text-gray-900 mb-1">{selectedPlan.price}</div>
+                <p className="text-xs text-gray-500 mb-3">You’re purchasing a one-time license. Support is optional and billed monthly if selected.</p>
               </DialogHeader>
               <div className="mb-4">
                 <h4 className="font-semibold text-green-700 mb-2 text-sm">Included Features:</h4>
