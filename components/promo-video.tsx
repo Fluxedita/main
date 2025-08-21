@@ -5,7 +5,17 @@ import { useState } from 'react';
 import { Play } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
-export function PromoVideo() {
+type PromoVideoProps = {
+  title?: string;
+  videoId?: string; // YouTube video ID used for thumbnail and embed
+  dialogTitle?: string;
+};
+
+export function PromoVideo({
+  title = "",
+  videoId = "A7EKEwLvKXA",
+  dialogTitle = "Fluxedita Demo",
+}: PromoVideoProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
@@ -17,6 +27,7 @@ export function PromoVideo() {
               <div className="absolute inset-0 bg-black/20 hover:bg-black/30 transition-colors duration-300"></div>
               <div className="relative z-10 text-center p-8">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                  {title}
                 </h2>
                 <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
                 </p>
@@ -25,7 +36,7 @@ export function PromoVideo() {
             
             <>
               <img
-                src={`https://img.youtube.com/vi/A7EKEwLvKXA/maxresdefault.jpg`}
+                src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
                 alt="Fluxedita Demo Video"
                 className="w-full h-full object-cover opacity-70 hover:opacity-100 transition-opacity duration-300"
                 loading="lazy"
@@ -52,11 +63,11 @@ export function PromoVideo() {
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-4xl w-full p-0">
           <DialogHeader className="px-6 pt-6">
-            <DialogTitle>Fluxedita Demo</DialogTitle>
+            <DialogTitle>{dialogTitle}</DialogTitle>
           </DialogHeader>
           <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
             <iframe
-              src="https://www.youtube.com/embed/A7EKEwLvKXA?autoplay=1&rel=0&modestbranding=1"
+              src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
               title="Fluxedita Demo Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -71,3 +82,4 @@ export function PromoVideo() {
     </section>
   );
 }
+

@@ -18,7 +18,11 @@ export default function Home() {
       <HeroSlider />
       <Features />
       <TechStack />
-      <PromoVideo />
+      <PromoVideo
+        title="What is Fluxedita? Who is it Designed For?"
+        videoId="hdPxq2q4p7U"
+        dialogTitle="What is Fluxedita? Who is it Designed For?"
+      />
       {/* Hosting-agnostic tagline banner */}
       <section className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
         <div className="rounded-md border border-gray-200 bg-gradient-to-r from-blue-50 via-white to-purple-50 p-4 text-gray-700 text-sm">
@@ -35,8 +39,10 @@ export default function Home() {
         <RoiCalculator />
       </section>
       <ForEveryone />
+      <PromoVideo />
       <CTA />
       <Footer />
     </div>
   )
 }
+
