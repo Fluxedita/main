@@ -13,21 +13,18 @@ const slides = [
     type: "hero",
     title: (
       <>
-        <span className="text-gray-900">Imagine if you could create a full-stack community platform</span>
-        <br />
-        <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          — complete with memberships, media, and interactivity — in hours, not months.
-        </span>
+        <span className="text-gray-900">Build a Modern Website in Hours — Not Months.</span>
       </>
     ),
     description:
-      "Fluxedita makes it possible: live messaging, dynamic media sets, premium content, and powerful admin tools — all fully guided, all in one platform.",
+      "Start simple — landing pages, portfolios, and small business sites — then grow into memberships and communities when you’re ready. Or jump straight into a full community platform. What will you build?",
     badge: {
       icon: Zap,
-      text: "Fully Guided • All‑in‑One",
+      text: "Fully Guided • Versatile • Reusable",
     },
     ctaButtons: [
-      { text: "Get Started Today — Fully Guided From Day One", link: "/pricing", variant: "default" },
+      { text: "🚀 Start Building", link: "/pricing", variant: "default" },
+      { text: "📖 See How It Works", link: "/about", variant: "outline" },
     ],
     techIcons: [
       { icon: Code, text: "Next.js & React" },
@@ -162,7 +159,7 @@ export function HeroSlider() {
   const wordContainer = {
     hidden: {},
     visible: {
-      transition: { delayChildren: 0.5, staggerChildren: 0.15 }, // Headline starts at 0.5s, 0.15s per word
+      transition: { delayChildren: 0.2, staggerChildren: 0.02 }, // Faster headline: starts at 0.2s, 0.02s per word
     },
   }
   const wordItem = {
@@ -440,7 +437,7 @@ export function HeroSlider() {
                         initial="hidden"
                         animate="visible"
                       >
-                        {"Imagine if you could create a full-stack community platform".split(" ").map((word, idx) => (
+                        {"Build a Modern Website in Hours — Not Months.".split(" ").map((word, idx) => (
                           <motion.span
                             key={idx}
                             variants={wordItem}
@@ -451,12 +448,12 @@ export function HeroSlider() {
                         ))}
                       </motion.h1>
                       <h2 className="mt-3 text-2xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                        {"— complete with memberships, media, and interactivity — in hours, not months.".split(" ").map((word, idx) => (
+                        {"Fluxedita gives you live editing, a reusable design system, member + media tools, and guided workflows.".split(" ").map((word, idx) => (
                           <motion.span
                             key={idx}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 3.0 + idx * 0.15 }}
+                            transition={{ duration: 0.6, delay: 0.6 + idx * 0.06 }}
                             className="inline-block mr-2"
                           >
                             {word}
@@ -469,21 +466,23 @@ export function HeroSlider() {
                   )}
 
                   {currentSlide.id === 4 ? (
-                    <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-                      {String(currentSlide.description)
-                        .split(" ")
-                        .map((word, idx) => (
-                          <motion.span
-                            key={idx}
-                            initial={{ opacity: 0, y: 8 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.45, delay: 6.8 + idx * 0.12 }}
-                            className="inline-block mr-2"
-                          >
-                            {word}
-                          </motion.span>
-                        ))}
-                    </p>
+                    <>
+                      <p className="text-base text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+                        {String(currentSlide.description)
+                          .split(" ")
+                          .map((word, idx) => (
+                            <motion.span
+                              key={idx}
+                              initial={{ opacity: 0, y: 8 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.45, delay: 1.6 + idx * 0.04 }}
+                              className="inline-block mr-2"
+                            >
+                              {word}
+                            </motion.span>
+                          ))}
+                      </p>
+                    </>
                   ) : (
                     <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
                       {currentSlide.description}
@@ -498,7 +497,7 @@ export function HeroSlider() {
                         whileTap={{ scale: 0.95 }}
                         initial={currentSlide.id === 4 ? { opacity: 0, y: 10 } : undefined}
                         animate={currentSlide.id === 4 ? { opacity: 1, y: 0 } : undefined}
-                        transition={currentSlide.id === 4 ? { duration: 0.5, delay: 10.6 } : undefined}
+                        transition={currentSlide.id === 4 ? { duration: 0.5, delay: 2.6 } : undefined}
                       >
                         <Button
                           size="lg"
@@ -527,7 +526,7 @@ export function HeroSlider() {
                                         key={i}
                                         initial={{ opacity: 0, y: 8 }}
                                         animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.4, delay: 10.8 + i * 0.1 }}
+                                        transition={{ duration: 0.4, delay: 2.8 + i * 0.05 }}
                                         className="inline-block mr-1"
                                       >
                                         {word}
