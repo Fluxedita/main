@@ -19,9 +19,7 @@ export default function Home() {
       <Features />
       <TechStack />
       <PromoVideo
-        title="What is Fluxedita? Who is it Designed For?"
-        videoId="hdPxq2q4p7U"
-        dialogTitle="What is Fluxedita? Who is it Designed For?"
+        videoId="ddGtaBu4GHM"
       />
       {/* Hosting-agnostic tagline banner */}
       <section className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
