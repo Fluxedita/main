@@ -13,7 +13,7 @@ type PromoVideoProps = {
 
 export function PromoVideo({
   title = "",
-  videoId = "A7EKEwLvKXA",
+  videoId = "ddGtaBu4GHM",
   dialogTitle = "Fluxedita Demo",
 }: PromoVideoProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
