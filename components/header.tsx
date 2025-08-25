@@ -118,6 +118,11 @@ export function Header({ showPromo = true }: HeaderProps) {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
+                  <Link href="/docs/sections" className="text-gray-700 hover:text-blue-600 transition-colors">
+                    Editable Section Components Overview
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
                   <Link href="/faq" className="text-gray-700 hover:text-blue-600 transition-colors">
                     Frequently Asked Questions
                   </Link>

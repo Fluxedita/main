@@ -47,6 +47,13 @@ body {
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Brand palette (approx. from logo). Tune as needed */
+    --brand-fuchsia: 330 85% 60%;
+    --brand-purple: 265 85% 60%;
+    --brand-indigo: 240 85% 64%;
+    --brand-blue: 217 90% 60%;
+    --brand-surface-dark: 240 30% 10%;
   }
   .dark {
     --background: 0 0% 3.9%;
